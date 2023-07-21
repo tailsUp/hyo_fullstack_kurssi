@@ -1,3 +1,4 @@
+```mermaid
 sequenceDiagram
     participant browser
     participant server
@@ -28,3 +29,5 @@ sequenceDiagram
     deactivate server
     
     Note post lähettää uuden "noten" serverille. Server lisää sen listalle ja palauttaa 302. Tämän jälkeen selain hakee listan sivuston uudelleen.
+
+```
