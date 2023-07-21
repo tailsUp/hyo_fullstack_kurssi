@@ -30,16 +30,29 @@ const Content = (props) => {
   console.log("Content sisällä!");
   return (
     <div>
-      <p>
-        {props.osa1} {props.nro1}
-      </p>
-      <p>
-      {props.osa2} {props.nro2}
-      </p>
-      <p>
-      {props.osa3} {props.nro3}
-      </p>
+      <Part1 {...props}/>
+      <Part2 {...props}/>
+      <Part3 {...props}/>
     </div>
+  )
+}
+
+const Part1 = (props) => {
+  console.log("Part1 sisällä!");
+  return (
+      <p>{props.osa1} {props.nro1}</p>
+  )
+}
+const Part2 = (props) => {
+  console.log("Part2 sisällä!");
+  return (
+    <p>{props.osa2} {props.nro2}</p>
+  )
+}
+const Part3 = (props) => {
+  console.log("Part3 sisällä!");
+  return (
+    <p>{props.osa3} {props.nro3}</p>
   )
 }
 
