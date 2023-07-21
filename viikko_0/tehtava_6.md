@@ -17,5 +17,5 @@ sequenceDiagram
     server ->>browser: JavaScript tiedosto.
     user ->>browser: Tekee uuden String muuttujan ja painaa lisää.
     browser->>javascript: new_note_spa
-    javacript-->>browser: Lisää uuden noten ja päivittää listan.
+    javascript-->>browser: Lisää uuden noten ja päivittää listan.
 ```
