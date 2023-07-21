@@ -1,3 +1,7 @@
+## Tehtävä 4 vastaus:
+
+Miten pyynnöt tai tieto liikkuu käyttäjän, selaimen ja serverin välillä ns. perinteisellä sivutoiminnolla.
+
 ```mermaid
 sequenceDiagram
     participant user
