@@ -16,6 +16,6 @@ sequenceDiagram
     browser ->>server: GET hGET https://studies.cs.helsinki.fi/exampleapp/main.js
     server ->>browser: JavaScript tiedosto.
     user ->>browser: Tekee uuden String muuttujan ja painaa lisää.
-    browser->>Javascript: new_note_spa
+    browser->>javascript: new_note_spa
     javacript-->>browser: Lisää uuden noten ja päivittää listan.
 ```
