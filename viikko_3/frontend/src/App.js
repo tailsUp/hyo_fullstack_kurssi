@@ -107,9 +107,8 @@ const App = () => {
    * @param {Object} duplicate  - Kontakti-olio. 
    */
   const updateNewNumber = (duplicate) => {
-    let fail = ''
     const updatedContact = { ...duplicate, number: newNumber }
-    fail = accessDB.update(updatedContact.id, updatedContact).then(response => {
+    accessDB.update(updatedContact.id, updatedContact).then(response => {
       if (response === false) {
         notificationError(`Contact ${duplicate.name} has already been removed from database. Please refresh your page!`)
       }
@@ -183,6 +182,7 @@ const App = () => {
    */
   const nameInputChange = (event) => {
     setName(event.target.value)
+    console.log(newName)
     console.log('')
   }
 
