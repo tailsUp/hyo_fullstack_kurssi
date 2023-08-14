@@ -1,6 +1,17 @@
 import Button2 from "./Button2"
 
+const tyhja = () => {
+    return (
+        <div>
+            <label>Database is empty</label>
+        </div>
+    )
+}
+
 const ContactRow = ({persons, click, flt}) => {
+    if(persons === undefined || persons === null || persons.length === 0 || !persons) {
+        return tyhja()
+    }
     if(flt === undefined || flt === '') {
         return (
             <div>
