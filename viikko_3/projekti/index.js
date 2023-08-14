@@ -38,6 +38,7 @@ let persons = [
  * Funktio asettaa morgan tokenina polku ja statustiedon middlewarelle.
  */
 morgan.token('param1', function(req, res, param) {
+    console.log(req.body)
     return `POST ${req.path} ${res.statusCode}`
 });
 
