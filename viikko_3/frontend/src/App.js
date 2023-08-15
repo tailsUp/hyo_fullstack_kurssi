@@ -82,6 +82,7 @@ const App = () => {
       else 
       {
         newContact = response
+        console.log(newContact.name + " " + newContact.number)
         setPersons(persons.concat(newContact))
         console.log('New contact has been created and added to the list: ', persons, newContact)
         notificationSuccess(`Added ${newContact.name}`)
