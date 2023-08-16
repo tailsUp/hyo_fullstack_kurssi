@@ -6,8 +6,9 @@ const cors = require('cors')
 
 app.use(cors())
 app.use(express.json())
-//app.use(morgan('tiny'))           //TEHTÄVÄ 3.7
-app.use(morgan(':method :path :status :res[content-length] - :response-time ms :object'));
+app.use(express.static('dist'))
+//app.use(morgan('tiny'))                                                                   //TEHTÄVÄ 3.7
+app.use(morgan(':method :path :status :res[content-length] - :response-time ms :object'));  //TEHTÄVÄ 3.8
 
 morgan.token('path', function(req, res, param) {
     return req.path
@@ -188,7 +189,7 @@ const unknownEndpoint = (request, response) => {
 
 app.use(unknownEndpoint)
 
-const PORT = 3001
+const PORT = process.env.PORT || 3001
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
