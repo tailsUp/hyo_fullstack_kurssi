@@ -23,25 +23,6 @@ app.get('/api/persons', (request, response) => {
 })
 
 app.post('/api/persons', (request, response) => {
-  const body = request.body
-
-  if (body.content === undefined) 
-  {
-    return response.status(400).json({ error: 'content missing' })
-  }
-
-  const person = new Person({
-    name: consoleName,
-    number: consoleNumber
-  })
-
-  person.save().then(savedPerson => {
-    response.json(savedPerson)
-  })
-})
-
-/*
-app.post('/api/persons', (request, response) => {
     const body = request.body
     console.log('BODY: ', body)
     if (body.name === undefined || body.number === undefined) {
@@ -56,8 +37,12 @@ app.post('/api/persons', (request, response) => {
     person.save().then(savedPerson => {
       response.json(savedPerson)
     })
+    .
+    catch(error => {
+      console.log(error)  
+      response.status(400).send({ error: 'COULD NOT SAVE NEW PERSON!' })
+    })
 })
-*/
   
 app.get('/api/persons/:id', (request, response) => {
     const hakuID = request.params.id

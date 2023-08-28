@@ -42,7 +42,3 @@ else
         console.log(`added ${consoleName} number ${consoleNumber} to phonebook`)
     })
 }
-
-
-
-
