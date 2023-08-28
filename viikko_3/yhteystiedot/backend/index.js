@@ -17,11 +17,30 @@ app.use(morgan(':method :path :status :res[content-length] - :response-time ms :
 let persons = []
 
 app.get('/api/persons', (request, response) => {
-    Person.find({}).then(persons => {
-      response.json(persons)
-    })
+  Person.find({}).then(persons => {
+    response.json(persons)
+  })
 })
-  
+
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  if (body.content === undefined) 
+  {
+    return response.status(400).json({ error: 'content missing' })
+  }
+
+  const person = new Person({
+    name: consoleName,
+    number: consoleNumber
+  })
+
+  person.save().then(savedPerson => {
+    response.json(savedPerson)
+  })
+})
+
+/*
 app.post('/api/persons', (request, response) => {
     const body = request.body
     console.log('BODY: ', body)
@@ -38,6 +57,7 @@ app.post('/api/persons', (request, response) => {
       response.json(savedPerson)
     })
 })
+*/
   
 app.get('/api/persons/:id', (request, response) => {
     const hakuID = request.params.id
