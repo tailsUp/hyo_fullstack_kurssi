@@ -7,7 +7,8 @@ if (process.argv.length<3) {
 
 //const password = process.argv[2]
 const password = "56ttd8sf"
-const consoleName = process.argv[3]
+//const consoleName = process.argv[3]
+const consoleName = process.argv
 const consoleNumber = process.argv[4]
 
 const url = `mongodb+srv://cluster0Access:${password}@cluster0.u1f6p2g.mongodb.net/personsApp?retryWrites=true&w=majority`
@@ -21,7 +22,9 @@ const personSchema = new mongoose.Schema({
 
 const Person = mongoose.model('person', personSchema)
 
-const person = new Person({
+const person = new Person(
+  console.log(consoleName),
+  {
     name: consoleName,
     number: consoleNumber
 })

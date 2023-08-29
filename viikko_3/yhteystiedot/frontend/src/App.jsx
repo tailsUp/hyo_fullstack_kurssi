@@ -149,7 +149,8 @@ const App = () => {
   const handleDelete = (event) => {
     event.preventDefault()
     console.log("handleDelete")
-    const deleteID = Number(event.target.id)
+    //const deleteID = Number(event.target.id) <-- TÄTÄ KÄYTETTY VANHAN TIETOKANNAN KANSSA -- HUOM! ID EI OLE ENÄÄ NUMERO MUODOSSA!!!
+    const deleteID = event.target.id
     const del = accessDB.returnPersonByID(persons, deleteID)
     confirmDelete(del)
   }

@@ -23,39 +23,70 @@ app.get('/api/persons', (request, response) => {
 })
 
 app.post('/api/persons', (request, response) => {
-    const body = request.body
-    console.log('BODY: ', body)
-    if (body.name === undefined || body.number === undefined) {
-      return response.status(400).json({ error: 'content missing' })
-    }
-  
-    const person = new Person({
-        name: consoleName,
-        number: consoleNumber
-    })
-  
-    person.save().then(savedPerson => {
-      response.json(savedPerson)
-    })
-    .
-    catch(error => {
-      console.log(error)  
-      response.status(400).send({ error: 'COULD NOT SAVE NEW PERSON!' })
-    })
+  const body = request.body
+  console.log('BODY: ', body)
+  if (body.name === undefined || body.number === undefined) {
+    return response.status(400).json({ error: 'content missing' })
+  }
+
+  const person = new Person({
+    name: body.name,
+    number: body.number
+  })
+  /*
+  const person = new Person({
+      name: consoleName,
+      number: consoleNumber
+  })
+  */
+  person.save().then(savedPerson => {
+    response.json(savedPerson)
+  })
 })
-  
-app.get('/api/persons/:id', (request, response) => {
-    const hakuID = request.params.id
-    Person.findById(hakuID).then(person => {
-      response.json(person)
-    })
+
+app.get('/api/persons/:id', (request, response, next) => {
+  const hakuID = request.params.id
+  Person.findById(hakuID)
+    .then(person => {
+      if(person)
+      {
+        response.json(person)
+      }
+      else
+      {
+        response.status(404).end()
+      }
+    }).catch(error => next(error))
+    /*.catch(error => {
+      console.log(error)
+      response.status(400).send({ error: 'THERE IS NO MATCHING ID IN THE DATABASE' })
+      //response.status(500).end()
+    })*/
 })
-  
-app.delete('/api/persons/:id', (request, response) => {
-    const hakuID = Number(request.params.id)
-    //const hakuID = request.params.id
-    persons = persons.filter(person => person.id !== hakuID)
-    response.status(204).end()
+
+app.delete('/api/persons/:id', (request, response, next) => {
+  //const deleteID = Number(request.params.id) <-- KÄYTETTY VANHAN TIETOKANNAN KANSSA - HUOM! ID EI OLE ENÄÄ NUMERO MUODOSSA
+  const deleteID = request.params.id
+  Person.findByIdAndRemove(deleteID)
+    .then(result => {
+      response.status(204).end()
+    })
+    .catch(error => next(error))
+})
+
+app.put('/api/persons/:id', (request, response, next) => {
+  const body = request.body
+  const updateID = request.params.id
+  const person = new Person({
+    name: body.name,
+    number: body.number
+  })
+
+  Person.findByIdAndUpdate(updateID, person, { new: true })
+    .then(updatedPerson => {
+      response.json(updatedPerson)
+    })
+    .catch(error => next(error))
 })
 
 //ROUTET
@@ -131,8 +162,43 @@ const unknownEndpoint = (request, response) => {
 
 app.use(unknownEndpoint)
 
+const errorHandler = (error, request, response, next) => {
+  console.error(error.message)
+
+  if (error.name === 'CastError') 
+  {
+    return response.status(400).send({ error: 'THERE IS NO MATCHING ID IN THE DATABASE' })
+  }
+
+  next(error)
+}
+
+app.use(errorHandler)
+
+/* PIDÄ TÄMÄ VIIMEISENÄ */
+
 //const PORT = process.env.PORT || 3001
 const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
+
+/* POISTETUT get/post operaatiot */
+
+/*
+app.delete('/api/persons/:id', (request, response) => {
+    const hakuID = Number(request.params.id)
+    //const hakuID = request.params.id
+    persons = persons.filter(person => person.id !== hakuID)
+    response.status(204).end()
+})
+*/
+
+/*
+app.get('/api/persons/:id', (request, response) => {
+    const hakuID = request.params.id
+    Person.findById(hakuID).then(person => {
+      response.json(person)
+    })
+})
+*/

@@ -27,8 +27,8 @@
 *** 3.10    - TEHTY
 *** 3.11    - TEHTY
 *** 3.12    - TEHTY
-*** 3.13    - TEHTY
-*** 3.14    - 
+*** 3.13    - TEHTY --> HAKEE KAIKKI YHTEYSTIEDOT
+*** 3.14    - TEHTY --> PYSTYY LISÄÄMÄÄN YHTEYSTIEDON
 *** 3.15    - 
 *** 3.16    - 
 *** 3.17    - 
