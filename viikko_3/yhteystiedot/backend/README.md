@@ -29,7 +29,7 @@
 *** 3.12    - TEHTY
 *** 3.13    - TEHTY --> HAKEE KAIKKI YHTEYSTIEDOT
 *** 3.14    - TEHTY --> PYSTYY LISÄÄMÄÄN YHTEYSTIEDON
-*** 3.15    - 
+*** 3.15    - TEHTY --> PYSTYY POISTAMAAN YHTEYSTIEDON
 *** 3.16    - 
 *** 3.17    - 
 *** 3.18    - 
