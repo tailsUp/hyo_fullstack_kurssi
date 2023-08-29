@@ -67,6 +67,7 @@ app.get('/api/persons/:id', (request, response, next) => {
 app.delete('/api/persons/:id', (request, response, next) => {
   //const deleteID = Number(request.params.id) <-- KÄYTETTY VANHAN TIETOKANNAN KANSSA - HUOM! ID EI OLE ENÄÄ NUMERO MUODOSSA
   const deleteID = request.params.id
+  console.log('BACKEND DELETE FUNKTIO: ', deleteID)
   Person.findByIdAndRemove(deleteID)
     .then(result => {
       response.status(204).end()
