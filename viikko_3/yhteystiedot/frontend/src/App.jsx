@@ -149,12 +149,9 @@ const App = () => {
   const handleDelete = (event) => {
     event.preventDefault()
     console.log("handleDelete")
-    console.log('ID: ', event.target.id)
     //const deleteID = Number(event.target.id) <-- TÄTÄ KÄYTETTY VANHAN TIETOKANNAN KANSSA -- HUOM! ID EI OLE ENÄÄ NUMERO MUODOSSA!!!
     const deleteID = event.target.id
-    console.log('ID: ', deleteID)
     const del = accessDB.returnPersonByID(persons, deleteID) 
-    console.log('HENKILÖ: ', del)
     confirmDelete(del)
   }
 
@@ -164,7 +161,6 @@ const App = () => {
    * @param {Object} del  - poistettava yhteystieto. 
    */
   const confirmDelete = (del) => {
-    console.log('VÄLITETTY YHTEYSTIETO: ', del)
     const ok = window.confirm(`Delete ${del.name} ?`)
     if (ok) {
       accessDB.deleteContact(del.id).then(response => {

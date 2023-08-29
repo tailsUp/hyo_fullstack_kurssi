@@ -6,7 +6,7 @@ const app = express()
 const cors = require('cors')
 //const mongoose = require('mongoose')
 const Person = require('./models/person')
-const person = require('./models/person')
+//const person = require('./models/person')
 
 app.use(cors())
 app.use(express.json())
@@ -16,12 +16,18 @@ app.use(morgan(':method :path :status :res[content-length] - :response-time ms :
 
 let persons = []
 
+/**
+ * Funktio palauttaa kaikki tietokannassa olevat oliot json muodossa.
+ */
 app.get('/api/persons', (request, response) => {
   Person.find({}).then(persons => {
     response.json(persons)
-  })
+  }).catch(error => next(error))
 })
 
+/**
+ * Funktio tallentaa uuden yhteystiedon tietokantaan. Jos tallennuksessa tulee ongelma niin palauttaa errorin.
+ */
 app.post('/api/persons', (request, response) => {
   const body = request.body
   console.log('BODY: ', body)
@@ -33,17 +39,16 @@ app.post('/api/persons', (request, response) => {
     name: body.name,
     number: body.number
   })
-  /*
-  const person = new Person({
-      name: consoleName,
-      number: consoleNumber
-  })
-  */
+
   person.save().then(savedPerson => {
     response.json(savedPerson)
-  })
+  }).catch(error => next(error))
 })
 
+/**
+ * Funktio hakee yksittäisen yhteystiedon tietokannasta saadun uniikin ID:n perusteella. Jos yhteystietoa ei löydy niin silloin 
+ * palautetaan error.
+ */
 app.get('/api/persons/:id', (request, response, next) => {
   const hakuID = request.params.id
   Person.findById(hakuID)
@@ -57,48 +62,60 @@ app.get('/api/persons/:id', (request, response, next) => {
         response.status(404).end()
       }
     }).catch(error => next(error))
-    /*.catch(error => {
-      console.log(error)
-      response.status(400).send({ error: 'THERE IS NO MATCHING ID IN THE DATABASE' })
-      //response.status(500).end()
-    })*/
 })
 
+/**
+ * Funktio poistaa tietokannasta yhteystiedon uniikin ID:n perusteella. Jos poistaminen ei toimi niin annetaan error.
+ */
 app.delete('/api/persons/:id', (request, response, next) => {
   //const deleteID = Number(request.params.id) <-- KÄYTETTY VANHAN TIETOKANNAN KANSSA - HUOM! ID EI OLE ENÄÄ NUMERO MUODOSSA
   const deleteID = request.params.id
-  console.log('BACKEND DELETE FUNKTIO: ', deleteID)
   Person.findByIdAndRemove(deleteID)
     .then(result => {
       response.status(204).end()
-    })
-    .catch(error => next(error))
+    }).catch(error => next(error))
 })
 
+/**
+ * Funktio muokkaa tietokannassa olevan yhteystiedon sisältöä ja tallentaa sen.
+ */
 app.put('/api/persons/:id', (request, response, next) => {
   const body = request.body
-  const updateID = request.params.id
+  const oldID = request.params.id
   const person = new Person({
     name: body.name,
     number: body.number
   })
 
-  Person.findByIdAndUpdate(updateID, person, { new: true })
+  Person.findByIdAndUpdate(oldID, { number: body.number }, { new: true })
     .then(updatedPerson => {
       response.json(updatedPerson)
-    })
-    .catch(error => next(error))
+    }).catch(error => next(error))
 })
-
-//ROUTET
 
 /**
  * tehtävä 3.2
+ * 
+ * Funktio lukee tietokannan sisällön ja palauttaa takaisin tiedon tarkasta ajasta ja taulukon koosta.
+ * 
  */
-app.get('/info', (req, res) => {
+app.get('/info2', (req, res) => {
+  const pvm = new Date()
+  res.send(`<div><p>Phonebook has info for ${persons.length} people</p><p>${pvm}</p></div>`)
+})
+
+/**
+ * Tehtävä 3.18 Infon muokkaaminen toimimaan tietokannan kautta sen sijaan että luettaisiin "vain" taulukko, kuten aiemmin tehtävässä
+ * 3.2.
+ * 
+ * Funktio lukee tietokannan sisällön ja palauttaa takaisin tiedon tarkasta ajasta ja tietokannan koosta.
+ */
+app.get('/info', (request, response, next) => {
+  Person.find({}).then(persons => {
     const pvm = new Date()
-    res.send(`<div><p>Phonebook has info for ${persons.length} people</p><p>${pvm}</p></div>`)
-  })
+    response.send(`<div><p>Phonebook has info for ${persons.length} people</p><p>${pvm}</p></div>`)
+  }).catch(error => next(error))
+})
 
 /**
  * Funktio palauttaa H1-elementin tekstillä: "Hello World!" jos osoitteena käytetään http://localhost:3001/
@@ -108,8 +125,6 @@ app.get('/info', (req, res) => {
 app.get('/', (req, res) => {
   res.send('<h1>Hello World!</h1>')
 })
-
-
 
 /**
  * Funktio täyttää tehtävänannon 3.5 vaatimuksen sattumanvaraisesta ID luomisesta.
@@ -201,5 +216,12 @@ app.get('/api/persons/:id', (request, response) => {
     Person.findById(hakuID).then(person => {
       response.json(person)
     })
+})
+*/
+
+/*
+const person = new Person({
+    name: consoleName,
+    number: consoleNumber
 })
 */
