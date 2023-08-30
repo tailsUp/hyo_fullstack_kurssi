@@ -8,7 +8,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js",
     "build:ui": "rm -rf build && cd ../frontend && npm run build && cp -r build ../backend",
-    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
+    "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
+    "lint": "eslint ."
   },
   "author": "Sorsa",
   "license": "ISC",
@@ -21,6 +22,9 @@
     "morgan": "^1.10.0"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.22.11",
+    "@typescript-eslint/eslint-plugin": "^6.5.0",
+    "eslint": "^8.48.0",
     "nodemon": "^3.0.1"
   }
 }

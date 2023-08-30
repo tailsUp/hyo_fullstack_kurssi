@@ -31,9 +31,9 @@
 *** 3.14    - TEHTY --> PYSTYY LISÄÄMÄÄN YHTEYSTIEDON       (LOKAALISTI JA RENDERILLÄ)
 *** 3.15    - TEHTY --> PYSTYY POISTAMAAN YHTEYSTIEDON      (LOKAALISTI JA RENDERILLÄ)
 *** 3.16    - TEHTY
-*** 3.17    - TEHTY --> PYSTYY PÄIVITTÄMÄÄN YHTEYSTIEDON    (LOKAALISTI JA __)
-*** 3.18    - TEHTY --> TESTATTU SELAIMELLA
-*** 3.19    - 
-*** 3.20    - 
-*** 3.21    - 
-*** 3.22    - 
+*** 3.17    - TEHTY --> PYSTYY PÄIVITTÄMÄÄN YHTEYSTIEDON    (LOKAALISTI JA RENDERILLÄ)
+*** 3.18    - TEHTY --> TESTATTU SELAIMELLA                 
+*** 3.19    - TEHTY                                         (LOKAALISTI JA RENDERILLÄ)
+*** 3.20    - TEHTY --> TESTATTU SELAIMELLA                 (LOKAALISTI JA RENDERILLÄ)
+*** 3.21    - TEHTY --> TESTATTU SELAIMELLA                 (LOKAALISTI JA RENDERILLÄ)
+*** 3.22    - TEHTY --> TESTATTU SELAIMELLA                 

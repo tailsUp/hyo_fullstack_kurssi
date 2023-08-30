@@ -19,14 +19,14 @@ mongoose.connect(url)
 })*/
 
 const personSchema = new mongoose.Schema({
-  name: {type: String, minlength: 3, required: [true, 'User name required']},
-  number: {type: String, minlength: 8,
+  name: { type: String, minlength: 3, required: [true, 'User name required'] },
+  number: { type: String, minlength: 8,
     validate: {
       validator: function(v) {
-        return /[0-9]{2,3}\-[0-9]{5,10}$/.test(v);
+        return /[0-9]{2,3}\-[0-9]{5,10}$/.test(v)
       },
       //message: props => `${props.value} is not a valid phone number!`
-      message: props => `Given number is not a valid phone number!`
+      message: props => 'Given number is not a valid phone number!'
     },
     required: [true, 'User phone number required']
   }
@@ -39,21 +39,21 @@ const person = new Person(
   {
     name: consoleName,
     number: consoleNumber
-})
+  })
 
-if(consoleName === undefined || consoleNumber === undefined) 
+if(consoleName === undefined || consoleNumber === undefined)
 {
-    Person.find({}).then(result => {
-        result.forEach(person => {
-          console.log(person)
-        })
-        mongoose.connection.close()
+  Person.find({}).then(result => {
+    result.forEach(person => {
+      console.log(person)
+    })
+    mongoose.connection.close()
   })
 }
-else 
+else
 {
-    person.save().then(result => {
-        mongoose.connection.close()
-        console.log(`added ${consoleName} number ${consoleNumber} to phonebook`)
-    })
+  person.save().then(result => {
+    mongoose.connection.close()
+    console.log(`added ${consoleName} number ${consoleNumber} to phonebook`)
+  })
 }

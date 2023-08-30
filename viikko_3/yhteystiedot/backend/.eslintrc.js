@@ -5,7 +5,9 @@ module.exports = {
     'es2021': true,
     'node': true
   },
-  'extends': 'eslint:recommended',
+  'extends': [
+    'eslint:recommended'
+  ],
   'overrides': [
     {
       'env': {
@@ -20,7 +22,7 @@ module.exports = {
     }
   ],
   'parserOptions': {
-    'ecmaVersion': 'latest',
+    'ecmaVersion': 'latest'
   },
   'rules': {
     'indent': [
