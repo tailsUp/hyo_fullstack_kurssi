@@ -28,7 +28,7 @@ app.get('/api/persons', (request, response) => {
 /**
  * Funktio tallentaa uuden yhteystiedon tietokantaan. Jos tallennuksessa tulee ongelma niin palauttaa errorin.
  */
-app.post('/api/persons', (request, response) => {
+app.post('/api/persons', (request, response, next) => {
   const body = request.body
   console.log('BODY: ', body)
   if (body.name === undefined || body.number === undefined) {
@@ -51,7 +51,7 @@ app.post('/api/persons', (request, response) => {
  */
 app.get('/api/persons/:id', (request, response, next) => {
   const hakuID = request.params.id
-  Person.findById(hakuID)
+  Person.findById(hakuID, {content, important}, {new: true, runValidators: true, context: 'query'})
     .then(person => {
       if(person)
       {
@@ -185,6 +185,10 @@ const errorHandler = (error, request, response, next) => {
   {
     return response.status(400).send({ error: 'THERE IS NO MATCHING ID IN THE DATABASE' })
   }
+  else if (error.name === 'ValidationError') 
+  {
+    return response.status(400).json({ error: error.message })
+  }
 
   next(error)
 }
@@ -198,30 +202,3 @@ const PORT = process.env.PORT
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`)
 })
-
-/* POISTETUT get/post operaatiot */
-
-/*
-app.delete('/api/persons/:id', (request, response) => {
-    const hakuID = Number(request.params.id)
-    //const hakuID = request.params.id
-    persons = persons.filter(person => person.id !== hakuID)
-    response.status(204).end()
-})
-*/
-
-/*
-app.get('/api/persons/:id', (request, response) => {
-    const hakuID = request.params.id
-    Person.findById(hakuID).then(person => {
-      response.json(person)
-    })
-})
-*/
-
-/*
-const person = new Person({
-    name: consoleName,
-    number: consoleNumber
-})
-*/

@@ -27,7 +27,9 @@ const create = newObject => {
   const request = axios.post(baseUrl, newObject)
   return request.then(response => response.data).catch(error => {
     console.log('fail')
-    return false
+    console.log(error.response.data.error)
+    //return false
+    return error.response.data.error
   })
 }
 

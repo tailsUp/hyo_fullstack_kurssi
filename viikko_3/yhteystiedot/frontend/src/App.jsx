@@ -75,17 +75,20 @@ const App = () => {
   const addNewContact = () => {
     let newContact = NewPerson(newName, newNumber)
     accessDB.create(newContact).then(response => {
-      if(response === false) 
-      {
-        notificationError(`Error in adding a new contact. Try again later!`)
-      }
-      else 
+      if(response.hasOwnProperty('id'))
       {
         newContact = response
         setPersons(persons.concat(newContact))
         console.log('New contact has been created and added to the list: ', persons, newContact)
         notificationSuccess(`Added ${newContact.name}`)
       }
+      else 
+      {
+        const modded = response.replace("Person validation failed:", "Error in adding a new contact. Error fields: ")
+        notificationError(modded)
+      }
+    }).catch(error => {
+      console.log(error)
     })
     emptyContantInputs()
   }
@@ -94,11 +97,18 @@ const App = () => {
    * Funktio varmistaa käyttäjältä että hän haluaa päivittää yhteystiedon puhelinnumeron.
    * @param {Object} duplicate  - Kontakti-olio. 
    */
-  const confirmNumberChange = (duplicate) => {
-    const ok = window.confirm(`${duplicate.name} is already in the phonebook, replace the old number with a new one?`)
-    if (ok) {
-      console.log(`User has decided to update ${duplicate.name} old number: ${duplicate.number} to new number: ${newNumber}`)
-      updateNewNumber(duplicate)
+  const confirmNumberChange = (duplicate, newNum) => {
+    if (/[0-9]{2,3}\-[0-9]{5,10}$/.test(newNum)) 
+    {
+      const ok = window.confirm(`${duplicate.name} is already in the phonebook, replace the old number with a new one?`)
+      if (ok) {
+        console.log(`User has decided to update ${duplicate.name} old number: ${duplicate.number} to new number: ${newNumber}`)
+        updateNewNumber(duplicate)
+      }
+    }
+    else 
+    {
+      notificationError(`Given number is not a valid phone number!`, false)
     }
   }
 
@@ -128,6 +138,7 @@ const App = () => {
    */
   const handleSubmit = (event) => {
     event.preventDefault()
+    const newNum = event.currentTarget[1].value
     console.log(persons)
     console.log("handleSubmit")
     const duplicate = DuplicateContact(newName, persons)
@@ -137,7 +148,7 @@ const App = () => {
     }
     else {
       console.log('Mathing name was found!')
-      confirmNumberChange(duplicate)
+      confirmNumberChange(duplicate, newNum)
     }
   }
 
