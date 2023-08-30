@@ -5,9 +5,7 @@ if (process.argv.length<3) {
   process.exit(1)
 }
 
-//const password = process.argv[2]
-const password = "56ttd8sf"
-//const consoleName = process.argv[3]
+const password = process.argv[2]
 const consoleName = process.argv
 const consoleNumber = process.argv[4]
 
