@@ -1,5 +1,9 @@
 const average = require('../utils/for_testing').average
 
+/**
+ * Viikon 4 materiaaleissa olleet esimerkki testit.
+ * Pidetään projektissa mahdollisesti tarvittavina malleina mukana.
+ */
 describe('average', () => {
   test('of one value is the value itself', () => {
     expect(average([1])).toBe(1)

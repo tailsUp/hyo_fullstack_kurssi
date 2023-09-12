@@ -1,6 +1,9 @@
 const Blogs = require('../models/blogs')
 const User = require('../models/users')
 
+/**
+ * Lyhyt lista blogi-olioita ilman userId:tä.
+ */
 const initialBlogs = [
     {
         title: 'TEST TITLE 111',
@@ -26,16 +29,36 @@ const nonExistingId = async () => {
   return blogs._id.toString()
 }
 
+/**
+ * Funktio palauttaa kaikki tietokannan blogit.
+ */
 const blogsInDb = async () => {
   const blogs = await Blogs.find({})
   return blogs.map(blog => blog.toJSON())
 }
 
+/**
+ * Funktio palauttaa kaikki tietokannan käyttäjät.
+ */
 const usersInDb = async () => {
   const users = await User.find({})
   return users.map(u => u.toJSON())
+} 
+
+/**
+ * Funktio asettaa blogilistalla oleviin blogi-olioihin käyttäjätunnukset ja palauttaa 
+ * muokatun listan.
+ * @param {String} userID - käyttäjätunnus.
+ * @param {Array} blogs   - blogilista
+ * @returns               - muokattu lista.
+ */
+const setUserIdForBlogs = (userID, blogs) => {
+  blogs.forEach(blog => {
+    blog.user = userID
+  });
+  return blogs
 }
 
 module.exports = {
-    initialBlogs, nonExistingId, blogsInDb, usersInDb,
-  }
+    initialBlogs, nonExistingId, blogsInDb, usersInDb, setUserIdForBlogs
+}

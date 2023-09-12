@@ -1,3 +1,9 @@
+/**
+ * Tämä tiedosto pitää sisällään yhden listan blogi-olioita. Olioille pitää asettaa erikseen
+ * userId kentään user: '', jotta ne ovat käyttökelpoisia. Tiedostossa on myös yksi yksittäinen 
+ * blogi-olio.
+ */
+
 const blogs = [
     {
         _id: "5a422a851b54a676234d17f7",

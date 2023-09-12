@@ -1,6 +1,9 @@
 const mongoose = require('mongoose')
 const uniqueValidator = require('mongoose-unique-validator')
 
+/**
+ * Funktio asettaa muuttujaan blogin skeeman.
+ */
 const userSchema = mongoose.Schema({
     id:             String,
     username:       {type: String, required: true, unique: true, minlength: 3},
@@ -11,6 +14,9 @@ const userSchema = mongoose.Schema({
 
 userSchema.plugin(uniqueValidator)
 
+/**
+ * Funktio asettaa skeeman JSON muotoon.
+ */
 userSchema.set('toJSON', {
     transform: (document, returnedObject) => {
         returnedObject.id = returnedObject._id.toString()

@@ -1,11 +1,3 @@
-PROJEKTISSA AJETUT ASENNUKSET
-
-    - npm init .
-    - npm install express
-    - npm install --save-dev nodemon
-    - npm install cors
-    - npm install mongoose
-
 TIETOKANTA
 
 Tehty viikkoa 4 varten uusi tietokanta. Projektin nimi mongodb:ssä on viikko4. Klusterin nimi on BlogCluster ja itse tietokanta on test.blogs.
@@ -13,6 +5,15 @@ Tehty viikkoa 4 varten uusi tietokanta. Projektin nimi mongodb:ssä on viikko4. 
 Tietokanta tuotannolle:     mongodb+srv://fullstack:<password>@blogcluster.ms7mcby.mongodb.net/test?retryWrites=true&w=majority
 Tietokanta testeille:       mongodb+srv://fullstack:<password>@viikko4testcluster.qbxqas1.mongodb.net/?retryWrites=true&w=majority
 
+MUUTA
+Kun kaikki tehtävät valmistuivat 12.9.2023 ja automaattiset testit saatin korjattua niin koko projektin toimivuus testattiin vielä erikseen
+postmanilla (blog/user/login -- get/put/post/delete) siltä osin miten kukin osa tuki eri operaatioita. KAIKKI KUNNOSSA!
+
+    BLOG:   GET - OK, GET+ID - OK, PUT - OK, POST - OK, DELETE - OK
+    USER:   GET - OK, POST - OK
+    LOGIN:  GET - OK
+
+    Testettu kaikki debug moodissa ja postmanilla.
 
 TEHTÄVÄT
 
@@ -38,22 +39,11 @@ TEHTÄVÄT
 4.13        - TEHTY     - TOTEUTETTU KOHDASSA 4.2 JA TESTATTU
 4.14        - TEHTY     - TOTEUTETTU KOHDASSA 4.2 JA TESTATTU
 4.15        - TEHTY     - SALASANA PIILOTETTU HASH OMINAISUUDELLA
-4.16        - TEHTY     - **** TESTIT PUUTTUVAT *****
-
-                          Tee myös testit, jotka varmistavat, että virheellisiä käyttäjiä ei luoda, ja että virheellisen käyttäjän luomisoperaatioon vastaus on järkevä statuskoodin ja virheilmoituksen osalta.
-
+4.16        - TEHTY
 4.17        - TEHTY     - TARKASTETTU MONGOSTA
 4.18        - TEHTY     
 4.19        - TEHTY     - TESTATTU POSTMANILLA - ILMAN TOKENIA AUTHORISATION KENTÄSSÄ LISÄYS EI ONNISTU
 4.20        - TEHTY     - KÄYTÖSSÄ POST (UUSI) JA DELETE ROUTEISSA. TESTATTU POSTMANILLA.
 4.21        - TEHTY
 4.22        - TEHTY
-4.23        -
-
-
-Sekä uuden blogin luonnin että blogin poistamisen yhteydessä on selvitettävä 
-operaation tekevän käyttäjän identiteetti. Tätä auttaa jo tehtävässä 4.20 tehty middleware tokenExtractor. 
-Tästä huolimatta post- ja delete-käsittelijöissä tulee vielä selvittää tokenia vastaava käyttäjä.
-
-Tee nyt uusi middleware userExtractor, joka selvittää pyyntöön liittyvän käyttäjän ja sijoittaa sen request-olioon. 
-Eli kun rekisteröit middlewaren ennen routeja tiedostossa app.js
+4.23        - TEHTY     - KAIKKI TESTIT LÄPI: 5 / 5 ja 34 / 34 time 3.238

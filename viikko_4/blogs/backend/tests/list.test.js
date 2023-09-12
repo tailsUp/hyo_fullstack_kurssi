@@ -1,7 +1,9 @@
 const listHelper = require('../utils/listHelper')
 const multipleTestBlogs = require('./listOfTestBlogs')
 
-
+/**
+ * Viikon 4 pakollisia harjoituksia testien tekemiseen.
+ */
 describe('TEHTÄVÄ 4.3', () => {
     test('dummy returns one', () => {
         const blogs = []

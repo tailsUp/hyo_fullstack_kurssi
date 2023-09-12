@@ -5,6 +5,9 @@ const helper = require('./test_helper')
 const app = require('../app')
 const api = supertest(app)
 
+/**
+ * Kaikki viikon 4 pakolliset käyttäjätestit.
+ */
 describe('All tests relating to app-users', () => {
   beforeEach(async () => {
     await User.deleteMany({})
@@ -38,6 +41,10 @@ describe('All tests relating to app-users', () => {
     expect(usernames).toContain(newUser.username)
   })
 
+  /**
+   * Tee myös testit, jotka varmistavat, että virheellisiä käyttäjiä ei luoda, ja että virheellisen käyttäjän 
+   * luomisoperaatioon vastaus on järkevä statuskoodin ja virheilmoituksen osalta.
+   */
   test('creation fails with proper statuscode and message if username already taken', async () => {
     const usersAtStart = await helper.usersInDb()
 

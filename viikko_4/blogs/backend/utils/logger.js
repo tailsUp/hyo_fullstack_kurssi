@@ -4,7 +4,8 @@
  */
 const info = (...params) => {
 
-    if (process.env.NODE_ENV !== 'test') {
+    if (process.env.NODE_ENV !== 'test') 
+    {
         console.log(...params)
     }
 }
@@ -15,7 +16,8 @@ const info = (...params) => {
  */
 const error = (...params) => {
 
-    if (process.env.NODE_ENV !== 'test') {
+    if (process.env.NODE_ENV !== 'test') 
+    {
         console.error(...params)
     }
 }

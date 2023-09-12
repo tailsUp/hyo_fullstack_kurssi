@@ -6,17 +6,17 @@ const User = require('../models/users')
  * Funktio palauttaa kaikki käyttäjät.
  */
 usersRouter.get('/', async (request, response) => {
-    //const users = await User.find({})
-    console.log('USERS')
-    const users = await User.find({}).populate('blogs', {title: 1, author: 1, url: 1, likes: 1})
+    console.log('GET ALL USERS')
+    const users = await User.find({}).populate('blogs', { title: 1, author: 1, url: 1, likes: 1 })
 
     response.json(users)
-  })
+})
 
-  /**
-   * Funktio lisää käyttäjän.
-   */
+/**
+ * Funktio lisää käyttäjän.
+ */
 usersRouter.post('/', async (request, response) => {
+    console.log('ADD NEW USER')
     const body = request.body
 
     const saltRounds = 10

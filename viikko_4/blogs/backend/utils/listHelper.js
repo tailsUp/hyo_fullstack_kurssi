@@ -31,7 +31,8 @@ const favoriteBlog = (blogs) => {
     return undefined
   let temp = {}
   blogs.reduce(function (compare, blog) {
-    if (blog.likes >= compare) {
+    if (blog.likes >= compare) 
+    {
       temp = blog
       return blog.likes
     }

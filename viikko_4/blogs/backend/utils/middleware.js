@@ -54,15 +54,24 @@ const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
+/**
+ * Funktio etsii headereista Bearer authorization tiedon, muokkaa sen ja asettaa token kenttään.
+ * @param {Request} request 
+ * @param {Response} response 
+ * @param {Next} next 
+ * @returns request
+ */
 const tokenExtractor = (request, response, next) => {
   try 
   {
-    const token = request.rawHeaders[3].replaceAll('Bearer ', '')
-    if (token) 
-    {    
-      request.token = token
-      
-    }
+    request.rawHeaders.map(function(_h)
+    {
+      if(_h.includes("Bearer")) 
+      {
+        request.token = _h.replace('Bearer ', '')
+      }
+        return _h
+      });
     return request
   }
   catch (error) 
@@ -72,10 +81,18 @@ const tokenExtractor = (request, response, next) => {
   }
 }
 
+/**
+ * Funktio etsii id:n perusteella käyttäjän tietokannasta ja palauttaa sen requestin user kentässä.
+ * @param {Request} request 
+ * @param {Response} response 
+ * @param {Next} next 
+ * @returns request
+ */
 const userExtractor = async (request, response, next) => {
   try 
   {
-    const user = await Users.findById(request.body.userId)
+    const userID = request.body.userId || request.body.user
+    const user = await Users.findById(userID)
     if(user) 
     {
       request.user = user

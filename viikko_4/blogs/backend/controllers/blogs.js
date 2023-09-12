@@ -2,15 +2,14 @@ const blogsRouter = require('express').Router()
 const middleware = require('../utils/middleware')
 const jwt = require('jsonwebtoken')
 const Blogs = require('../models/blogs')
-//const Users = require('../models/users')
 
 /**
  * Funktio palauttaa tietokannan kaiken sisällön JSON olioina.
  */
 blogsRouter.get('/', async (request, response) => {
-    //const blogs = await Blogs.find({})
-    console.log('TEST')
-    const blogs = await Blogs.find({}).populate('user', { username: 1, name: 1 })
+    const blogs = await Blogs.find({})
+    console.log('GET ALL BLOG POSTS')
+    //const blogs = await Blogs.find({}).populate('user', { username: 1, name: 1 })
     response.json(blogs)
 })
 
@@ -20,9 +19,9 @@ blogsRouter.get('/', async (request, response) => {
 blogsRouter.get('/:id', async (request, response) => {
     const blogs = await Blogs.findById(request.params.id)
     if (blogs) {
-      response.json(blogs)
+        response.json(blogs)
     } else {
-      response.status(404).json(blogs)
+        response.status(404).json(blogs)
     }
 })
 
@@ -34,15 +33,13 @@ blogsRouter.post('/', async (request, response, next) => {
     request = await middleware.userExtractor(request, response, next)
     request = await middleware.tokenExtractor(request, response, next)
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
-    
-    if (!decodedToken.id) 
-    {    
-        return response.status(401).json({ error: 'token invalid' })  
-    }  
-    
+
+    if (!decodedToken.id) {
+        return response.status(401).json({ error: 'token invalid' })
+    }
+
     //const user = await Users.findById(body.userId)
-    if(request.user) 
-    {
+    if (request.user) {
         const user = request.user
 
         const blogs = new Blogs({
@@ -52,9 +49,9 @@ blogsRouter.post('/', async (request, response, next) => {
             likes: body.likes,
             user: user._id
         })
-      
+
         const savedBlog = await blogs.save()
-        user.blogs = user.blogs.concat(savedBlog._id)  
+        user.blogs = user.blogs.concat(savedBlog._id)
         await user.save()
         response.status(201).json(savedBlog)
     }
@@ -69,12 +66,10 @@ blogsRouter.delete('/:id', async (request, response) => {
     const deleteID = request.params.id
     request = middleware.tokenExtractor(request, response)
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
-    if (!decodedToken.id) 
-    {    
-        return response.status(401).json({ error: 'token invalid - NOTHING was deleted' })  
+    if (!decodedToken.id) {
+        return response.status(401).json({ error: 'token invalid - NOTHING was deleted' })
     }
-    else 
-    {
+    else {
         await Blogs.findByIdAndRemove(deleteID)
         response.status(204).end()
     }
@@ -101,16 +96,3 @@ blogsRouter.put('/:id', (request, response, next) => {
 })
 
 module.exports = blogsRouter
-
-/*
-
-const getTokenFrom = request => {  
-    const authorization = request.get('authorization')  
-    if (authorization && authorization.startsWith('Bearer ')) 
-    {    
-        return authorization.replace('Bearer ', '')  
-    }  
-    return null
-}
-
-*/

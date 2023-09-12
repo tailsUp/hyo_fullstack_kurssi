@@ -1,3 +1,6 @@
+/**
+ * Tiedosto pitää sisällään viikon 4 testaus esimerkkejä.
+ */
 const reverse = require('../utils/for_testing').reverse
 
 test('reverse of a', () => {
