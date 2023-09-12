@@ -1,15 +1,19 @@
 const mongoose = require('mongoose')
+const uniqueValidator = require('mongoose-unique-validator')
 
 /**
  * Funktio asettaa muuttujaan blogin skeeman.
  */
 const blogsSchema = mongoose.Schema({
-    id: String,
-    title: String,
-    author: String,
-    url: String,
-    likes: Number,
+    id:     String,
+    title:  {type: String, required: true}, 
+    author: {type: String, required: true},
+    url:    {type: String, required: true},
+    likes:  {type: Number, default: 0},
+    user:   {type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true},
 })
+
+blogsSchema.plugin(uniqueValidator)
 
 /**
  * Funktio asettaa skeeman JSON muotoon.

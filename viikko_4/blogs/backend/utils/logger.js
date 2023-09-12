@@ -3,7 +3,10 @@
  * @param  {...any} params - viestin sisältö.
  */
 const info = (...params) => {
-    console.log(...params)
+
+    if (process.env.NODE_ENV !== 'test') {
+        console.log(...params)
+    }
 }
 
 /**
@@ -11,7 +14,10 @@ const info = (...params) => {
  * @param  {...any} params - viestin sisältö.
  */
 const error = (...params) => {
-    console.error(...params)
+
+    if (process.env.NODE_ENV !== 'test') {
+        console.error(...params)
+    }
 }
 
 module.exports = {

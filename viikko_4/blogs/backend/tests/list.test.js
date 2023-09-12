@@ -1,5 +1,5 @@
 const listHelper = require('../utils/listHelper')
-const multipleTestBlogs = require('../tests/listOfTestBlogs')
+const multipleTestBlogs = require('./listOfTestBlogs')
 
 
 describe('TEHTÄVÄ 4.3', () => {
