@@ -1,4 +1,4 @@
-const Notification = ({ message, success }) => {
+const notification = ({ message, success }) => {
     if (message === null || message === '') 
     {
         return null
@@ -20,7 +20,6 @@ const Notification = ({ message, success }) => {
             )
         }
     }
-
 }
 
-export default Notification
+export default notification

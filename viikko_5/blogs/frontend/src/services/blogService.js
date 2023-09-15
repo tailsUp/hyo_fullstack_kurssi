@@ -36,17 +36,16 @@ const create = async newBLog => {
  * @param {String} ID       - Uniikki blogi-olion id. 
  * @param {Object} newBlog  - Uusi blogi jolla korvataan vanha blogi.
  */
-const update = async (ID, newBlog) => {
+const update = async (ID, blog) => {
   try 
   {
-    const request = await axios.put(`${baseUrl} /${ID}`, newBLog)
+    const request = await axios.put(`${baseUrl} /${ID}`, blog)
     return request.response
   }
   catch(error)
   {
     console.log('Error in updating and old blog. ' , error)
   }
-
 }
 
 /**
