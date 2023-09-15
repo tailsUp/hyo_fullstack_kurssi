@@ -39,9 +39,20 @@ blogsRouter.post('/', async (request, response, next) => {
     }
 
     //const user = await Users.findById(body.userId)
-    if (request.user) {
-        const user = request.user
-
+    if (request.user) 
+    {
+        let user = undefined
+        if(Array.isArray(request.user))
+        {
+            user = request.user[0]
+        }
+        else
+        {
+            user = request.user
+        }
+        console.log('QWEQWEWQ', user)
+        console.log('QWEQWEWQ', user[0])
+        console.log('12eqwe', user._id)
         const blogs = new Blogs({
             title: body.title,
             author: body.author,

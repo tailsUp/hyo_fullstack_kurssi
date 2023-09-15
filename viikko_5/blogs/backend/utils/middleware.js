@@ -92,7 +92,18 @@ const userExtractor = async (request, response, next) => {
   try 
   {
     const userID = request.body.userId || request.body.user
-    const user = await Users.findById(userID)
+    let user = undefined
+    if(userID === undefined) 
+    {
+      const userName = request.body.username
+      //user = await Users.findByName(userName)
+      user = await Users.find({ username: userName })
+    }
+    else 
+    {
+      user = await Users.findById(userID)
+    }
+    
     if(user) 
     {
       request.user = user
