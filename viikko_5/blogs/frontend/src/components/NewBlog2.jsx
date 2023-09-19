@@ -1,14 +1,20 @@
 const newBLog = (props) => {
 
+    /*const handleNewBlog = async (event) => {
+        event.preventDefault()
+          const tempBlog = {
+            title: event.target[0].value,
+            author: event.target[1].value,
+            url: event.target[2].value,
+            likes: event.target[3].value ? event.target[3].value : 0,
+            username: props.user.username
+      }*/
+
     return (
         <div>
             <h4>Add new Blog to DB</h4>
-            <div id="divNewBlog2">
-                <input type="submit" value="New blog" onClick={props.toggle} id="newBlogAdd"/>
-                <br/><br/>
-            </div>
-            <div id="divNewBlog3" style={{display: "none"}}>
-                <form id="formNewBlog">
+            <div id="divNewBlog3" >
+                <form id="formNewBlog" onSubmit={props.click}>
                     <div>
                         <label>title:   <input type="text" id="inputBlogTitle" name="inputBlog" onChange={props.newTitle}/></label>
                     </div>
@@ -23,15 +29,18 @@ const newBLog = (props) => {
                     </div>
                     <div>
                         <br/>
-                        <input type="submit" value="Add new Blog" onClick={props.click}/>
+                        <input type="submit" value="Add new Blog"/>
                     </div>
                 </form>
-            </div>
-            <div id="divNewBlog4" style={{display: "none"}}>
-                <br/>
-                <input type="submit" value="Cancel" onClick={props.toggle} id="newBlogCancel"/>
             </div>
         </div>
     )
 }
+
 export default newBLog
+
+/*
+
+<form id="formNewBlog" onSubmit={props.click}>
+
+*/

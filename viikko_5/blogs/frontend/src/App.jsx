@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react'
 //Components:
 import LoginInputs from './components/LoginInputs'
+import LoginInputs2 from './components/LoginInputs2'
 import ShowUser from './components/ShowUser'
 import Blog from './components/Blog'
 import BlogsToScreen from './components/Blogs'
 import NewBlog from './components/NewBlog'
+import NewBlog2 from './components/NewBlog2'
 //Services:
 import LoginService from './services/loginService'
 import blogService from './services/blogService'
@@ -12,6 +14,8 @@ import blogService from './services/blogService'
 import InformUser from './alerts/notification'
 //Helpers:
 import Helper from './helpers/sortBlogs'
+//Toggle:
+import Togglable from './components/Togglable'
 
 const App = () => {
   //Objects:
@@ -23,7 +27,6 @@ const App = () => {
   //Login:
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
-
 
   //useEffect(() => {})
 
@@ -113,8 +116,13 @@ const App = () => {
    */
   const loginForm = () => {
     return (
-      <LoginInputs click={handleLogin} usr={username} psw={password} changeUSR={usernameChange} changePSW={passwordChange} />
+      <Togglable buttonLabel={"Open application"} buttonLabel2={"Cancel"} id={"btnNewBlogCreate"} id2={"btnNewBlogCancel"}>
+        <LoginInputs2 click={handleLogin} usr={username} psw={password} changeUSR={usernameChange} changePSW={passwordChange} />
+      </Togglable>
     )
+    /*return (
+      <LoginInputs click={handleLogin} usr={username} psw={password} changeUSR={usernameChange} changePSW={passwordChange} />
+    )*/
   }
 
   /**
@@ -140,10 +148,43 @@ const App = () => {
    * Funktio palauttaa div elementin jonka sisällä on kaikki uuden blogin luonnissa käytetyt inputit.
    * @param {Function} click 
    */
-  const createBlogView = (click) => {
+  const createBlogView = (click) => {  
     return (
-      <NewBlog click={handleNewBlog} />
+      <Togglable buttonLabel={"Create new blog"} buttonLabel2={"Cancel"} id={"btnNewBlogCreate"} id2={"btnNewBlogCancel"}>
+        <NewBlog2 click={handleNewBlog} />
+      </Togglable>
     )
+  }
+
+  /**
+   * Jos uuden blogin luominen on onnistunut niin funktio tyhjentää kentät ja sulkee lomakkeen.
+   */
+  const toggleNewBlogView = (event, success) => {
+    event.preventDefault()
+    if(success) 
+    {
+      clearNewBlogInputs()
+      clickButton()
+    }
+  }
+
+  /**
+   * Funktio painaa sivulla olevaa cancel painiketta, jotta lomake saadaan suljettua.
+   */
+  const clickButton = () => {
+    const t = document.getElementById("btnNewBlogCancel").click();
+    console.log('QWEQWE, ', t)
+  }
+
+  const clearNewBlogInputs = () => {
+    document.getElementById("inputBlogTitle").value = ''
+    document.getElementById("inputBlogAuthor").value = ''
+    document.getElementById("inputBlogUrl").value = ''
+    document.getElementById("inputBlogLikes").value = ''
+  }
+
+  const elementTextChange = (id, text) => {
+    document.getElementById(id).value = text
   }
 
   /**
@@ -153,10 +194,10 @@ const App = () => {
     event.preventDefault()
     try {
       const tempBlog = {
-        title: event.target.form[0].value,
-        author: event.target.form[1].value,
-        url: event.target.form[2].value,
-        likes: event.target.form[3].value ? event.target.form[3].value : 0,
+        title: event.target[0].value,
+        author: event.target[1].value,
+        url: event.target[2].value,
+        likes: event.target[3].value ? event.target[3].value : 0,
         username: user.username
       }
       const success = await blogService.create(tempBlog)
@@ -164,6 +205,7 @@ const App = () => {
         setBlogs(blogs.concat(tempBlog))
         zeroNewBlogInputs()
         notificationSuccess(`New blog: ${tempBlog.title} by ${tempBlog.author} has been added to databse!`)
+        toggleNewBlogView(event, true)
       }
       else {
         notificationError('Error in adding a new blog. Try again later. If error continues logout and login again.')
