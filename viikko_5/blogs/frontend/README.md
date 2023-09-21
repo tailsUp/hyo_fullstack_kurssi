@@ -10,9 +10,9 @@ Frontend pyörii Vitellä ensisijaisesti osoitteessa http://localhost:5173/
 5.3     - TEHTY (Testattu verkkosivulla lokaalisti)
 5.4     - TEHTY (EI CSS VIELÄ!)
 5.5     - TEHTY 
-5.6     - 
-5.7     - 
-5.8     - 
-5.9     - 
+5.6     - TEHTY
+5.7     - TEHTY
+5.8     - TEHTY (HAETAAN VIIMEISIN BLOGI UUDELLEEN SEN ID:LLÄ JA LISÄTÄÄN CONCATILLA NÄYTÖLLE)
+5.9     - TEHTY
 5.10    - 
 5.11    - 

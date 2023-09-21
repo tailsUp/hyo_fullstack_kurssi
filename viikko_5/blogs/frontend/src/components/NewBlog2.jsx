@@ -1,31 +1,47 @@
-const newBLog = (props) => {
+import { useState } from 'react'
 
-    /*const handleNewBlog = async (event) => {
-        event.preventDefault()
-          const tempBlog = {
-            title: event.target[0].value,
-            author: event.target[1].value,
-            url: event.target[2].value,
-            likes: event.target[3].value ? event.target[3].value : 0,
-            username: props.user.username
-      }*/
+const newBLog = ({ createBlog, user }) => {
+
+    const [newTitle, setNewTitle] = useState('')
+    const [newAuthor, setNewAuthor] = useState('')
+    const [newURL, setNewURL] = useState('')
+    const [newLikes, setNewLikes] = useState('')
+
+    const addBlog = (event) => {
+      event.preventDefault()
+      createBlog({
+        title: newTitle,
+        author: newAuthor,
+        url: newURL,
+        likes: newLikes ? newLikes : 0,
+        username: user.username
+      })
+      emptyInputs()
+    }
+
+    const emptyInputs = () => {
+        setNewTitle('')
+        setNewAuthor('')
+        setNewURL('')
+        setNewLikes('')
+    }
 
     return (
         <div>
             <h4>Add new Blog to DB</h4>
             <div id="divNewBlog3" >
-                <form id="formNewBlog" onSubmit={props.click}>
+                <form id="formNewBlog" onSubmit={addBlog}>
                     <div>
-                        <label>title:   <input type="text" id="inputBlogTitle" name="inputBlog" onChange={props.newTitle}/></label>
+                        <label>title:   <input type="text" id="inputBlogTitle" name="inputBlog" value={newTitle} onChange={event => setNewTitle(event.target.value)}/></label>
                     </div>
                     <div>
-                        <label>author:  <input type="text" id="inputBlogAuthor" name="inputBlog" onChange={props.newAuthor}/></label>
+                        <label>author:  <input type="text" id="inputBlogAuthor" name="inputBlog" value={newAuthor} onChange={event => setNewAuthor(event.target.value)}/></label>
                     </div>
                     <div>
-                        <label>url:     <input type="text" id="inputBlogUrl" name="inputBlog" onChange={props.newURL}/></label>
+                        <label>url:     <input type="text" id="inputBlogUrl" name="inputBlog" value={newURL} onChange={event => setNewURL(event.target.value)}/></label>
                     </div>
                     <div>
-                        <label>likes:   <input type="Number" id="inputBlogLikes" name="inputBlog" onChange={props.newLikes}/></label>
+                        <label>likes:   <input type="Number" id="inputBlogLikes" name="inputBlog" value={newLikes} onChange={event => setNewLikes(event.target.value)}/></label>
                     </div>
                     <div>
                         <br/>

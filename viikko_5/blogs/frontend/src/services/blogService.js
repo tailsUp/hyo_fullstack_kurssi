@@ -39,8 +39,8 @@ const create = async newBLog => {
 const update = async (ID, blog) => {
   try 
   {
-    const request = await axios.put(`${baseUrl} /${ID}`, blog)
-    return request.response
+    const request = await axios.put(`${baseUrl}/${ID}`, blog)
+    return request.status
   }
   catch(error)
   {
@@ -59,4 +59,18 @@ const getAll = async () => {
   return response.data
 }
 
-export default { getAll, create, update, setToken }
+const getBlogWithID = async (ID) => {
+  try
+  {
+    const request = await axios.get(`${baseUrl}/${ID}`)
+    return request.data
+  } 
+  catch (error)
+  {
+    console.log('Error in fetching new blog. ', error)
+    return undefined
+  }
+
+}
+
+export default { getAll, create, update, setToken, getBlogWithID }

@@ -1,15 +1,18 @@
-import Button2 from "./Button2"
+import BlogInfo from "./FullBlogInfo"
+//{ blogs, user }
+const blogs = (props) => {
 
-const blogs = ({blogs, user}) => {
-    if(user === null || user === undefined) 
+    /*if(props.user === null || props.user === undefined) 
     {
         return noLogin()
     }
-    else if(blogs === undefined || blogs === null || blogs.length === 0) 
+    else*/ 
+    if(props.blogs === undefined || props.blogs === null || props.blogs.length === 0) 
     {
         return blogListEmpty()
     }
-    return blogListPopulated(blogs={blogs}, user={user})
+      
+    return blogListPopulated(props)
 }
 
 const noLogin = () => {
@@ -28,17 +31,16 @@ const blogListEmpty = () => {
         </div>
     )
 }
-
-const blogListPopulated = ({blogs, user}) => {
+//{ blogs }
+const blogListPopulated = (props) => {
+    console.log(props)
+    let index = 0
     return (
         <div>
             <h4>Your blogs:</h4>
-            {blogs.map(blog => 
+                {props.blogs.map(blog => 
                 <div key={blog.title + blog.author}>
-                    <label>
-                        {blog.title + " " + blog.author}
-                        <Button2 text={'delete'} id={'id'} click={null}/>
-                    </label>
+                    <BlogInfo b={blog} nro={index++} updateOldBlog={props.updateOldBlog}/>
                 </div>
             )}
         </div>

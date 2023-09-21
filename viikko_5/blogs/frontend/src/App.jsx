@@ -120,9 +120,6 @@ const App = () => {
         <LoginInputs2 click={handleLogin} usr={username} psw={password} changeUSR={usernameChange} changePSW={passwordChange} />
       </Togglable>
     )
-    /*return (
-      <LoginInputs click={handleLogin} usr={username} psw={password} changeUSR={usernameChange} changePSW={passwordChange} />
-    )*/
   }
 
   /**
@@ -134,80 +131,84 @@ const App = () => {
     )
   }
 
+  const updateOldBlog = async (event, b) => {
+    event.preventDefault()
+    try 
+    {
+      const newLike = b.likes + 1
+      console.log(newLike)
+      const uBlog = { ...b, likes: newLike }
+      console.log('XXX: ', uBlog)
+      const status = await blogService.update(uBlog.id, uBlog)
+      if (status === 200)
+      {
+        console.log('Likes have been increased')
+        setBlogs(Helper.updateBlogList(blogs, uBlog))
+        notificationSuccess(`Blog: ${uBlog.title} has ${uBlog.likes} likes!`)
+      }
+      else
+      {
+        notificationError('Error in increasing likes - try again later!')
+      }
+    }
+    catch (error) {
+      console.log('Error in increasing likes! ', error)
+      notificationError('Error in increasing likes - try again later!')
+    }
+  }
+
   /**
    * Funktio palauttaa div elementin jonka sisällö on kaikki käyttäjän lisäämät blogit.
    */
   const showBlogs = () => {
-    const sorted = Helper.sortBlogsByUserID(blogs, user)
     return (
-      <BlogsToScreen blogs={sorted} user={user} />
+      <form id="formUpdateBlog" onSubmit={updateOldBlog}>
+        <BlogsToScreen blogs={blogs} updateOldBlog={updateOldBlog} />
+      </form>
     )
   }
 
   /**
-   * Funktio palauttaa div elementin jonka sisällä on kaikki uuden blogin luonnissa käytetyt inputit.
-   * @param {Function} click 
+   * Funktio palauttaa div elementin jonka sisällä on kaikki uuden blogin luonnissa käytetyt inputit. 
    */
-  const createBlogView = (click) => {  
+  const createBlogView = () => {
     return (
       <Togglable buttonLabel={"Create new blog"} buttonLabel2={"Cancel"} id={"btnNewBlogCreate"} id2={"btnNewBlogCancel"}>
-        <NewBlog2 click={handleNewBlog} />
+        <NewBlog2 createBlog={createNewBlog} user={user} />
       </Togglable>
     )
-  }
-
-  /**
-   * Jos uuden blogin luominen on onnistunut niin funktio tyhjentää kentät ja sulkee lomakkeen.
-   */
-  const toggleNewBlogView = (event, success) => {
-    event.preventDefault()
-    if(success) 
-    {
-      clearNewBlogInputs()
-      clickButton()
-    }
   }
 
   /**
    * Funktio painaa sivulla olevaa cancel painiketta, jotta lomake saadaan suljettua.
    */
   const clickButton = () => {
-    const t = document.getElementById("btnNewBlogCancel").click();
-    console.log('QWEQWE, ', t)
+    document.getElementById("btnNewBlogCancel").click();
   }
 
-  const clearNewBlogInputs = () => {
-    document.getElementById("inputBlogTitle").value = ''
-    document.getElementById("inputBlogAuthor").value = ''
-    document.getElementById("inputBlogUrl").value = ''
-    document.getElementById("inputBlogLikes").value = ''
-  }
-
+  /**
+   * Funktion avulla voi muuttaa elementin tekstisisällön tai arvon.
+   */
   const elementTextChange = (id, text) => {
     document.getElementById(id).value = text
   }
 
   /**
-   * Funktio käsittelee uden blogin lisäykseen liittyvöt logiikan. 
+   * Funktio lisää uuden olion tietokantaan. Kun uusi olio on luotu niin se etsitään vielä lopuksi omalla ID:llä jotta
+   * näytölle saadaan ajantasainen tieto.
    */
-  const handleNewBlog = async (event) => {
-    event.preventDefault()
+  const createNewBlog = async (blogObject) => {
     try {
-      const tempBlog = {
-        title: event.target[0].value,
-        author: event.target[1].value,
-        url: event.target[2].value,
-        likes: event.target[3].value ? event.target[3].value : 0,
-        username: user.username
-      }
-      const success = await blogService.create(tempBlog)
+      const success = await blogService.create(blogObject)
       if (success) {
-        setBlogs(blogs.concat(tempBlog))
+        const created = await blogService.getBlogWithID(success.id)
+        setBlogs(blogs.concat(created))
         zeroNewBlogInputs()
-        notificationSuccess(`New blog: ${tempBlog.title} by ${tempBlog.author} has been added to databse!`)
-        toggleNewBlogView(event, true)
+        notificationSuccess(`New blog: ${success.title} by ${success.author} has been added to databse!`)
+        clickButton()
       }
-      else {
+      else 
+      {
         notificationError('Error in adding a new blog. Try again later. If error continues logout and login again.')
       }
     }
