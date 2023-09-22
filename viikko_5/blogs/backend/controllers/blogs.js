@@ -7,9 +7,9 @@ const Blogs = require('../models/blogs')
  * Funktio palauttaa tietokannan kaiken sisällön JSON olioina.
  */
 blogsRouter.get('/', async (request, response) => {
-    const blogs = await Blogs.find({})
+    //const blogs = await Blogs.find({})
     console.log('GET ALL BLOG POSTS')
-    //const blogs = await Blogs.find({}).populate('user', { username: 1, name: 1 })
+    const blogs = await Blogs.find({}).populate('user', { username: 1, name: 1 })
     response.json(blogs)
 })
 
@@ -17,10 +17,13 @@ blogsRouter.get('/', async (request, response) => {
  * Funktio palauttaa yksittäisen olion tietokannasta, jos sellaisen löytää.
  */
 blogsRouter.get('/:id', async (request, response) => {
-    const blogs = await Blogs.findById(request.params.id)
-    if (blogs) {
+    const blogs = await Blogs.findById(request.params.id).populate('user', { username: 1, name: 1 })
+    if (blogs) 
+    {
         response.json(blogs)
-    } else {
+    }
+    else
+    {
         response.status(404).json(blogs)
     }
 })
@@ -34,7 +37,8 @@ blogsRouter.post('/', async (request, response, next) => {
     request = await middleware.tokenExtractor(request, response, next)
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
 
-    if (!decodedToken.id) {
+    if (!decodedToken.id) 
+    {
         return response.status(401).json({ error: 'token invalid' })
     }
 
@@ -50,9 +54,6 @@ blogsRouter.post('/', async (request, response, next) => {
         {
             user = request.user
         }
-        console.log('QWEQWEWQ', user)
-        console.log('QWEQWEWQ', user[0])
-        console.log('12eqwe', user._id)
         const blogs = new Blogs({
             title: body.title,
             author: body.author,
@@ -77,12 +78,15 @@ blogsRouter.delete('/:id', async (request, response) => {
     const deleteID = request.params.id
     request = middleware.tokenExtractor(request, response)
     const decodedToken = jwt.verify(request.token, process.env.SECRET)
-    if (!decodedToken.id) {
+    if (!decodedToken.id) 
+    {
         return response.status(401).json({ error: 'token invalid - NOTHING was deleted' })
     }
-    else {
+    else 
+    {
         await Blogs.findByIdAndRemove(deleteID)
         response.status(204).end()
+        return response.status()
     }
 })
 

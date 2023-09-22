@@ -59,6 +59,9 @@ const getAll = async () => {
   return response.data
 }
 
+/**
+ * Funktio palauttaa id:tä vastaavan blogin jos sellainen löytyy tietokannasta.
+ */
 const getBlogWithID = async (ID) => {
   try
   {
@@ -70,7 +73,25 @@ const getBlogWithID = async (ID) => {
     console.log('Error in fetching new blog. ', error)
     return undefined
   }
-
 }
 
-export default { getAll, create, update, setToken, getBlogWithID }
+/**
+ * Funktio poistaa tietokannasta ID:tä vastaavan blogin jos token on ok.
+ */
+const deleteBlog = async (ID, token) => {
+  try 
+  {
+    axios.defaults.headers.common['token'] = 'Bearer ' + token
+    const status = await axios.delete(`${baseUrl}/${ID}`)
+    axios.defaults.headers.common['token'] = ''
+    return status.status
+  }
+  catch (error) 
+  {
+    axios.defaults.headers.common['token'] = ''
+    console.log('Error in deleting a blog. ', error)
+    return undefined
+  }
+}
+
+export default { getAll, create, update, setToken, getBlogWithID, deleteBlog }

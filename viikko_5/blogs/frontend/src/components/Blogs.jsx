@@ -2,11 +2,11 @@ import BlogInfo from "./FullBlogInfo"
 //{ blogs, user }
 const blogs = (props) => {
 
-    /*if(props.user === null || props.user === undefined) 
+    if(props.user === null || props.user === undefined) 
     {
         return noLogin()
     }
-    else*/ 
+    else 
     if(props.blogs === undefined || props.blogs === null || props.blogs.length === 0) 
     {
         return blogListEmpty()
@@ -40,7 +40,7 @@ const blogListPopulated = (props) => {
             <h4>Your blogs:</h4>
                 {props.blogs.map(blog => 
                 <div key={blog.title + blog.author}>
-                    <BlogInfo b={blog} nro={index++} updateOldBlog={props.updateOldBlog}/>
+                    <BlogInfo b={blog} nro={index++} user={props.user} updateOldBlog={props.updateOldBlog} deleteBlogs={props.deleteBlogs}/>
                 </div>
             )}
         </div>

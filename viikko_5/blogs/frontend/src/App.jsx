@@ -32,7 +32,7 @@ const App = () => {
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs(blogs)
+      setBlogs(Helper.sortBlogListByLikes(blogs))
     )
   }, [])
 
@@ -138,12 +138,11 @@ const App = () => {
       const newLike = b.likes + 1
       console.log(newLike)
       const uBlog = { ...b, likes: newLike }
-      console.log('XXX: ', uBlog)
       const status = await blogService.update(uBlog.id, uBlog)
       if (status === 200)
       {
         console.log('Likes have been increased')
-        setBlogs(Helper.updateBlogList(blogs, uBlog))
+        setBlogs(Helper.sortBlogListByLikes(Helper.updateBlogList(blogs, uBlog)))
         notificationSuccess(`Blog: ${uBlog.title} has ${uBlog.likes} likes!`)
       }
       else
@@ -151,9 +150,29 @@ const App = () => {
         notificationError('Error in increasing likes - try again later!')
       }
     }
-    catch (error) {
+    catch (error) 
+    {
       console.log('Error in increasing likes! ', error)
       notificationError('Error in increasing likes - try again later!')
+    }
+  }
+
+  const deleteBlogs = async (event, ID) => {
+    event.preventDefault()
+    const ok = window.confirm('Are you sure you want to delete a blog you have added?')
+    if(ok)
+    {
+      const del = await blogService.deleteBlog(ID, user.token)
+      console.log('DELETE: ', del)
+      if(del === 204)
+      {
+        console.log('DELETE SUCCESFULL!')
+        setBlogs(Helper.removeBlogByID(blogs, ID))
+      }
+      else 
+      {
+        notificationError('Error in deleting blogs - try again later!')
+      }
     }
   }
 
@@ -163,7 +182,7 @@ const App = () => {
   const showBlogs = () => {
     return (
       <form id="formUpdateBlog" onSubmit={updateOldBlog}>
-        <BlogsToScreen blogs={blogs} updateOldBlog={updateOldBlog} />
+        <BlogsToScreen blogs={blogs} user={user} updateOldBlog={updateOldBlog} deleteBlogs={deleteBlogs}/>
       </form>
     )
   }
