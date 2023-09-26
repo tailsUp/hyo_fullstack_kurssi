@@ -3,6 +3,8 @@
 Backend pyörii osoitteessa http://localhost:3003/
 Frontend pyörii Vitellä ensisijaisesti osoitteessa http://localhost:5173/
 
+eslint: npm run lint -- --fix
+
 *** Tehtävät
 
 5.1     - TEHTY (Kirjautuminen - OK)
@@ -16,3 +18,17 @@ Frontend pyörii Vitellä ensisijaisesti osoitteessa http://localhost:5173/
 5.9     - TEHTY
 5.10    - TEHTY (KAKSI VIIMEISTÄ VAIHTAA PAIKKAANSA SEN MUKAAN KUMMALLA ON ENEMMÄN TYKKÄYKSIÄ)
 5.11    - TEHTY (RATKAISTU NIIN ETTÄ KÄYTTÄJÄLLÄ ON NÄKYMÄSSÄ DELETE NAPPI VAIN JOS BLOGI ON HEIDÄN LUOMANSA)
+5.12    - TEHTY
+
+5.13    - TEHTY (fullBlogInfo.test.js)
+5.14    - TEHTY (fullBlogInfo.test.js)
+5.15    - TEHTY (fullBlogInfo.test.js)
+5.16    - TEHTY (blogForm.test.js)
+
+5.17    
+5.18
+5.19
+5.20
+5.21
+5.22
+5.23

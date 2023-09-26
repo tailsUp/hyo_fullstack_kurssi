@@ -17,7 +17,7 @@ const setToken = newToken => {
  * @param {Object} newBLog
  */
 const create = async newBLog => {
-  try 
+  try
   {
     const config = {
       headers: { Authorization: token },
@@ -25,7 +25,7 @@ const create = async newBLog => {
     const response = await axios.post(baseUrl, newBLog, config)
     return response.data
   }
-  catch (error) 
+  catch (error)
   {
     console.log('Error in creating a new blog. ', error)
   }
@@ -33,11 +33,11 @@ const create = async newBLog => {
 
 /**
  * Funktio päivittää blogin tiedot korvaamalla 'vanhan' blogin uudella.
- * @param {String} ID       - Uniikki blogi-olion id. 
+ * @param {String} ID       - Uniikki blogi-olion id.
  * @param {Object} newBlog  - Uusi blogi jolla korvataan vanha blogi.
  */
 const update = async (ID, blog) => {
-  try 
+  try
   {
     const request = await axios.put(`${baseUrl}/${ID}`, blog)
     return request.status
@@ -67,7 +67,7 @@ const getBlogWithID = async (ID) => {
   {
     const request = await axios.get(`${baseUrl}/${ID}`)
     return request.data
-  } 
+  }
   catch (error)
   {
     console.log('Error in fetching new blog. ', error)
@@ -79,14 +79,14 @@ const getBlogWithID = async (ID) => {
  * Funktio poistaa tietokannasta ID:tä vastaavan blogin jos token on ok.
  */
 const deleteBlog = async (ID, token) => {
-  try 
+  try
   {
     axios.defaults.headers.common['token'] = 'Bearer ' + token
     const status = await axios.delete(`${baseUrl}/${ID}`)
     axios.defaults.headers.common['token'] = ''
     return status.status
   }
-  catch (error) 
+  catch (error)
   {
     axios.defaults.headers.common['token'] = ''
     console.log('Error in deleting a blog. ', error)

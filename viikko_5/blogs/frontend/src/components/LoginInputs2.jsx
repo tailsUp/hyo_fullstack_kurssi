@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types'
+
 const LoginInputs2 = (props) => {
   return (
     <div>
@@ -19,6 +21,14 @@ const LoginInputs2 = (props) => {
       </form>
     </div>
   )
+}
+
+LoginInputs2.propTypes = {
+  click: PropTypes.func.isRequired,
+  changeUSR: PropTypes.func.isRequired,
+  changePSW: PropTypes.func.isRequired,
+  usr: PropTypes.string.isRequired,
+  psw: PropTypes.string.isRequired
 }
 
 export default LoginInputs2

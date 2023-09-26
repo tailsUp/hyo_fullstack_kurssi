@@ -1,11 +1,8 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 //Components:
-import LoginInputs from './components/LoginInputs'
 import LoginInputs2 from './components/LoginInputs2'
 import ShowUser from './components/ShowUser'
-import Blog from './components/Blog'
 import BlogsToScreen from './components/Blogs'
-import NewBlog from './components/NewBlog'
 import NewBlog2 from './components/NewBlog2'
 //Services:
 import LoginService from './services/loginService'
@@ -27,6 +24,8 @@ const App = () => {
   //Login:
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
+  //Toggle:
+  const blogFormRef = useRef()
 
   //useEffect(() => {})
 
@@ -46,8 +45,8 @@ const App = () => {
   }, [])
 
   /**
-   * Funktiota kutsutaan kun painetaan login nappulaa. 
-   * Sisään kirjautuminen tutkitaan alifunktiossa tryToLogIn(). 
+   * Funktiota kutsutaan kun painetaan login nappulaa.
+   * Sisään kirjautuminen tutkitaan alifunktiossa tryToLogIn().
    */
   const handleLogin = (event) => {
     event.preventDefault()
@@ -98,14 +97,14 @@ const App = () => {
   }
 
   /**
-   * Funktio sitoo käyttäjänimen muutokset ja vastaavan inputkentän. 
+   * Funktio sitoo käyttäjänimen muutokset ja vastaavan inputkentän.
    */
   const usernameChange = (event) => {
     setUsername(event.target.value)
   }
 
   /**
-   * Funktio sitoo salasanan muutokset ja vastaavan inputkentän. 
+   * Funktio sitoo salasanan muutokset ja vastaavan inputkentän.
    */
   const passwordChange = (event) => {
     setPassword(event.target.value)
@@ -116,7 +115,7 @@ const App = () => {
    */
   const loginForm = () => {
     return (
-      <Togglable buttonLabel={"Open application"} buttonLabel2={"Cancel"} id={"btnNewBlogCreate"} id2={"btnNewBlogCancel"}>
+      <Togglable buttonLabel={'Open application'} buttonLabel2={'Cancel'} id={'btnNewBlogCreate'} id2={'btnNewBlogCancel'} >
         <LoginInputs2 click={handleLogin} usr={username} psw={password} changeUSR={usernameChange} changePSW={passwordChange} />
       </Togglable>
     )
@@ -133,7 +132,7 @@ const App = () => {
 
   const updateOldBlog = async (event, b) => {
     event.preventDefault()
-    try 
+    try
     {
       const newLike = b.likes + 1
       console.log(newLike)
@@ -150,7 +149,7 @@ const App = () => {
         notificationError('Error in increasing likes - try again later!')
       }
     }
-    catch (error) 
+    catch (error)
     {
       console.log('Error in increasing likes! ', error)
       notificationError('Error in increasing likes - try again later!')
@@ -169,7 +168,7 @@ const App = () => {
         console.log('DELETE SUCCESFULL!')
         setBlogs(Helper.removeBlogByID(blogs, ID))
       }
-      else 
+      else
       {
         notificationError('Error in deleting blogs - try again later!')
       }
@@ -188,11 +187,11 @@ const App = () => {
   }
 
   /**
-   * Funktio palauttaa div elementin jonka sisällä on kaikki uuden blogin luonnissa käytetyt inputit. 
+   * Funktio palauttaa div elementin jonka sisällä on kaikki uuden blogin luonnissa käytetyt inputit.
    */
   const createBlogView = () => {
     return (
-      <Togglable buttonLabel={"Create new blog"} buttonLabel2={"Cancel"} id={"btnNewBlogCreate"} id2={"btnNewBlogCancel"}>
+      <Togglable buttonLabel={'Create new blog'} buttonLabel2={'Cancel'} id={'btnNewBlogCreate'} id2={'btnNewBlogCancel'} ref={blogFormRef}>
         <NewBlog2 createBlog={createNewBlog} user={user} />
       </Togglable>
     )
@@ -202,7 +201,7 @@ const App = () => {
    * Funktio painaa sivulla olevaa cancel painiketta, jotta lomake saadaan suljettua.
    */
   const clickButton = () => {
-    document.getElementById("btnNewBlogCancel").click();
+    document.getElementById('btnNewBlogCancel').click()
   }
 
   /**
@@ -221,12 +220,13 @@ const App = () => {
       const success = await blogService.create(blogObject)
       if (success) {
         const created = await blogService.getBlogWithID(success.id)
-        setBlogs(blogs.concat(created))
+        setBlogs(Helper.sortBlogListByLikes(blogs.concat(created)))
         zeroNewBlogInputs()
         notificationSuccess(`New blog: ${success.title} by ${success.author} has been added to databse!`)
-        clickButton()
+        //clickButton()
+        blogFormRef.current.toggleVisibility()
       }
-      else 
+      else
       {
         notificationError('Error in adding a new blog. Try again later. If error continues logout and login again.')
       }
@@ -239,7 +239,7 @@ const App = () => {
 
   /**
    * Funktio päivittää viestin sisällön onnistuneissa suorituksissa. Kutsuu lopuksi myös funktiota joka tyhjentää viestin sisällön.
-   * @param {String} text   - Teksti joka tulee onnisutneen viestin sisään. 
+   * @param {String} text   - Teksti joka tulee onnisutneen viestin sisään.
    */
   const notificationSuccess = (text) => {
     emptyNotificationNow()
@@ -250,12 +250,12 @@ const App = () => {
 
   /**
    * Funktio päivittää viestin sisällön epäonnistuneissa suorituksissa. Kutsuu lopuksi myös funktiota joka tyhjentää viestin sisällön.
-   * @param {String} text   - Teksti joka tulee onnisutneen viestin sisään. 
+   * @param {String} text   - Teksti joka tulee onnisutneen viestin sisään.
    */
   const notificationError = (text) => {
     emptyNotificationNow()
     setErrorMessage(`${text}`)
-    setSuccess(false)
+    //setSuccess(false)
     emptyNotificationTimer()
   }
 
