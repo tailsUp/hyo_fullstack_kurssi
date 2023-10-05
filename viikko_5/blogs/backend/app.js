@@ -17,6 +17,11 @@ mongoose.set('strictQuery', false)
 
 logger.info('connecting to', config.MONGODB_URI)
 
+if (process.env.NODE_ENV === 'test') {
+    const testingRouter = require('./controllers/testing')
+    app.use('/api/testing', testingRouter)
+  }
+
 /**
  * Funktio yhdistää applikaation tietokantaan.
  */

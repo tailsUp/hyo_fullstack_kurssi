@@ -25,10 +25,10 @@ eslint: npm run lint -- --fix
 5.15    - TEHTY (fullBlogInfo.test.js)
 5.16    - TEHTY (blogForm.test.js)
 
-5.17    
-5.18
-5.19
-5.20
-5.21
-5.22
-5.23
+5.17    - TEHTY
+5.18    - TEHTY
+5.19    - TEHTY
+5.20    - TEHTY
+5.21    - TEHTY
+5.22    - TEHTY
+5.23    - TEHTY

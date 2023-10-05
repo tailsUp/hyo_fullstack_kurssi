@@ -45,7 +45,7 @@ const NewBLog2 = ({ createBlog, user }) => {
           </div>
           <div>
             <br/>
-            <input type="submit" value="Add new Blog"/>
+            <input id="submitNewBlog" data-testid="submitNewBlog" type="submit" value="Add new Blog"/>
           </div>
         </form>
       </div>

@@ -30,12 +30,6 @@ const App = () => {
   //useEffect(() => {})
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(Helper.sortBlogListByLikes(blogs))
-    )
-  }, [])
-
-  useEffect(() => {
     const loggedBlogUser = window.localStorage.getItem('blogApplicationUser')
     if (loggedBlogUser) {
       const _user = JSON.parse(loggedBlogUser)
@@ -43,6 +37,14 @@ const App = () => {
       blogService.setToken(_user.token)
     }
   }, [])
+
+  useEffect(() => {setBlogs()}, [])
+
+  /*useEffect(() => {
+    blogService.getAll().then(blogs =>
+      setBlogs(Helper.sortBlogListByLikes(blogs))
+    )
+  }, [])*/
 
   /**
    * Funktiota kutsutaan kun painetaan login nappulaa.
@@ -67,6 +69,9 @@ const App = () => {
         'blogApplicationUser', JSON.stringify(_user)
       )
       zeroLoginCredentials()
+      blogService.getAll().then(blogs =>
+        setBlogs(Helper.sortBlogListByLikes(blogs))
+      )
       console.log('LogIn succefull')
     }
     catch (Exception) {

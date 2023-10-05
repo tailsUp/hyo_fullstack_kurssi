@@ -8,16 +8,16 @@ const LoginInputs2 = (props) => {
         <div>
           <label>
             username
-            <input type="text" value={props.usr} name="Username" onChange={props.changeUSR} />
+            <input id="inputUsername" type="text" value={props.usr} name="Username" onChange={props.changeUSR} />
           </label>
         </div>
         <div>
           <label>
             password
-            <input type="password" value={props.psw} name="Password" onChange={props.changePSW} />
+            <input id="inputPassword" type="password" value={props.psw} name="Password" onChange={props.changePSW} />
           </label>
         </div>
-        <button type="submit">login</button>
+        <button id="buttonLogin" type="submit">login</button>
       </form>
     </div>
   )

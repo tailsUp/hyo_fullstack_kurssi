@@ -44,8 +44,12 @@ const toggle = (event) => {
  * { b, nro }
  */
 const fullBlogInfo = (props) => {
-
-  if(props.user.username === props.b.user.username)
+  if(props.b.user === null || props.b.user === undefined || props.b.user.username === null || props.b.user.username === undefined)
+  {
+    //Jos käyttäjä on poistettu tietokannasta
+    return returnWithOutUser(props)
+  }
+  else if(props.user.username === props.b.user.username)
   {
     return returnWithAll(props)
   }
@@ -53,6 +57,29 @@ const fullBlogInfo = (props) => {
   {
     return returnWithOutDEL(props)
   }
+}
+
+const returnWithOutUser = (props) => {
+  return (
+    <div id={'divBlogMain' + props.nro} style={infoStyle}>
+      <div id={'divBlogTitle' + props.nro}>
+        <label>{props.b.title}</label>
+        <Button2 text={'view'} id={btnView + props.nro} data-testid={btnView + props.nro} click={toggle} />
+      </div>
+      <div id={divID + props.nro} style={{ display: 'none' }}>
+        <div id={'divBlogURL' + props.nro}>
+          <label>{props.b.url}</label>
+        </div>
+        <div id={'divBlogLikes' + props.nro}>
+          <label id={'labelLikes' + props.nro}>{props.b.likes}</label>
+          <input id={'buttonLike' + props.nro} onClick={event => {props.updateOldBlog(event, props.b)}} value='like' type='submit'/>
+        </div>
+        <div id={'divBlogAuthor' + props.nro}>
+          <label>Original user doesnt exist in database.</label>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 const returnWithOutDEL = (props) => {
@@ -67,7 +94,7 @@ const returnWithOutDEL = (props) => {
           <label>{props.b.url}</label>
         </div>
         <div id={'divBlogLikes' + props.nro}>
-          <label>{props.b.likes}</label>
+          <label id={'labelLikes' + props.nro}>{props.b.likes}</label>
           <input id={'buttonLike' + props.nro} onClick={event => {props.updateOldBlog(event, props.b)}} value='like' type='submit'/>
         </div>
         <div id={'divBlogAuthor' + props.nro}>
@@ -80,23 +107,23 @@ const returnWithOutDEL = (props) => {
 
 const returnWithAll = (props) => {
   return (
-    <div id={'divBlogMain' + props.nro} style={infoStyle}>
+    <div id={'divBlogMain' + props.nro} data-testid={'divBlogMain' + props.nro} style={infoStyle}>
       <div id={'divBlogTitle' + props.nro}>
         <label>{props.b.title}</label>
-        <Button2 text={'view'} id={btnView + props.nro} click={toggle} />
+        <Button2 text={'view'} id={btnView + props.nro} data-testid={btnView + props.nro} click={toggle} />
       </div>
       <div id={divID + props.nro} data-testid={divID + props.nro} style={{ display: 'none' }}>
         <div id={'divBlogURL' + props.nro}>
           <label>{props.b.url}</label>
         </div>
         <div id={'divBlogLikes' + props.nro}>
-          <label>{props.b.likes}</label>
+          <label id={'labelLikes' + props.nro}>{props.b.likes}</label>
           <input id={'buttonLike' + props.nro} data-testid={'buttonLike' + props.nro} onClick={event => {props.updateOldBlog(event, props.b)}} value='like' type='submit'/>
         </div>
         <div id={'divBlogAuthor' + props.nro}>
           <label>{props.b.user.username}</label>
         </div>
-        <div id="divDeleteBlog">
+        <div id={'divDeleteBlog' + props.nro}>
           <button id={'buttonDelete' + props.nro} data-testid={'buttonDelete' + props.nro} onClick={event => {props.deleteBlogs(event, props.b.id)}} style={btnDELSyle}>delete</button>
         </div>
       </div>

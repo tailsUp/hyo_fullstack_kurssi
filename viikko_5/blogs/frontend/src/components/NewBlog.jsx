@@ -10,16 +10,16 @@ const newBLog = (props) => {
       <div id="divNewBlog3" style={{ display: 'none' }}>
         <form id="formNewBlog">
           <div>
-            <label>title:   <input type="text" id="inputBlogTitle" name="inputBlog" onChange={props.newTitle}/></label>
+            <label>title:   <input type="text" id="inputBlogTitle" data-testid="inputBlogTitle" name="inputBlog" onChange={props.newTitle}/></label>
           </div>
           <div>
-            <label>author:  <input type="text" id="inputBlogAuthor" name="inputBlog" onChange={props.newAuthor}/></label>
+            <label>author:  <input type="text" id="inputBlogAuthor" data-testid="inputBlogAuthor" name="inputBlog" onChange={props.newAuthor}/></label>
           </div>
           <div>
-            <label>url:     <input type="text" id="inputBlogUrl" name="inputBlog" onChange={props.newURL}/></label>
+            <label>url:     <input type="text" id="inputBlogUrl" data-testid="inputBlogUrl" name="inputBlog" onChange={props.newURL}/></label>
           </div>
           <div>
-            <label>likes:   <input type="Number" id="inputBlogLikes" name="inputBlog" onChange={props.newLikes}/></label>
+            <label>likes:   <input type="Number" id="inputBlogLikes" data-testid="inputBlogLikes" name="inputBlog" onChange={props.newLikes}/></label>
           </div>
           <div>
             <br/>

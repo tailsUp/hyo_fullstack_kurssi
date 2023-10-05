@@ -5,17 +5,17 @@ const LoginInputs = ({ click, usr, psw, changeUSR,changePSW }) => {
       <form onSubmit={click}>
         <div>
           <label>
-                        username
-            <input type="text" value={usr} name="Username" onChange={changeUSR} />
+            username
+            <input id="inputUsername" type="text" value={usr} name="Username" onChange={changeUSR} />
           </label>
         </div>
         <div>
           <label>
-                        password
-            <input type="password" value={psw} name="Password" onChange={changePSW}/>
+            password
+            <input id="inputPassword" type="password" value={psw} name="Password" onChange={changePSW}/>
           </label>
         </div>
-        <button type="submit">login</button>
+        <button id="buttonLogin" type="submit">login</button>
       </form>
     </div>
   )
