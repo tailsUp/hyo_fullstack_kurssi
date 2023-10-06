@@ -15,7 +15,6 @@ const loginRouter = require('./controllers/login')
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
 
-logger.info('polku: ', require('dotenv').config())
 logger.info('connecting to', config.MONGODB_URI)
 
 if (process.env.NODE_ENV === 'test') 
