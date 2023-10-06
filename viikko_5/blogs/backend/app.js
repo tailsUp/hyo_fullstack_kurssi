@@ -1,7 +1,7 @@
+const config = require('./utils/config')
 //Muut:
 const express = require('express')
 require('express-async-errors')
-const config = require('./utils/config')
 const app = express()
 const cors = require('cors')
 //Utils:
