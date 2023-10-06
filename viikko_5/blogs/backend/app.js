@@ -15,7 +15,8 @@ const loginRouter = require('./controllers/login')
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
 
-logger.info('connecting to', config.MONGODB_URI)
+//logger.info('connecting to', config.MONGODB_URI)
+logger.info('connecting to', process.env.MONGODB_URI)
 
 if (process.env.NODE_ENV === 'test') 
 {
@@ -26,7 +27,15 @@ if (process.env.NODE_ENV === 'test')
 /**
  * Funktio yhdistää applikaation tietokantaan.
  */
-mongoose.connect(config.MONGODB_URI)
+/*mongoose.connect(config.MONGODB_URI)
+    .then(() => {
+        logger.info('connected to MongoDB')
+    })
+    .catch((error) => {
+        logger.error('error connection to MongoDB:', error.message)
+    })*/
+
+mongoose.connect(process.env.MONGODB_URI)
     .then(() => {
         logger.info('connected to MongoDB')
     })
