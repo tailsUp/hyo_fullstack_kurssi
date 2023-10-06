@@ -10,12 +10,10 @@ const logger = require('./utils/logger')
 const blogsRouter = require('./controllers/blogs')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
-
-const config = require('./utils/config')
-
 //Mongoose:
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
+const config = require('./utils/config')
 
 logger.info('connecting to', config.MONGODB_URI)
 
