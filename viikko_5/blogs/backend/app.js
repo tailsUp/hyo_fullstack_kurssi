@@ -4,6 +4,7 @@ require('express-async-errors')
 const app = express()
 const cors = require('cors')
 //Utils:
+const config = require('./utils/config')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
 //Controller:
@@ -13,8 +14,8 @@ const loginRouter = require('./controllers/login')
 //Mongoose:
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
-const config = require('./utils/config')
 
+logger.info('polku: ', require('dotenv').config())
 logger.info('connecting to', config.MONGODB_URI)
 
 if (process.env.NODE_ENV === 'test') 
