@@ -26,7 +26,7 @@ if (process.env.NODE_ENV === 'test')
 /**
  * Funktio yhdistää applikaation tietokantaan.
  */
-mongoose.connect(config.MONGODB_URI || 3003)
+mongoose.connect(config.MONGODB_URI)
     .then(() => {
         logger.info('connected to MongoDB')
     })
