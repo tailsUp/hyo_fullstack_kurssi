@@ -36,4 +36,4 @@
 *** 3.19    - TEHTY                                         (LOKAALISTI JA RENDERILLÄ)
 *** 3.20    - TEHTY --> TESTATTU SELAIMELLA                 (LOKAALISTI JA RENDERILLÄ)
 *** 3.21    - TEHTY --> TESTATTU SELAIMELLA                 (LOKAALISTI JA RENDERILLÄ)
-*** 3.22    - TEHTY --> TESTATTU SELAIMELLA                 
+*** 3.22    - TEHTY --> TESTATTU SELAIMELLA                 (LOKAALISTI JA RENDERILLÄ)
