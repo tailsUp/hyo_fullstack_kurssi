@@ -1,3 +1,6 @@
+/**
+ * Liitetään .env tiedoston parametrit js tason muuttujiin.
+ */
 require('dotenv').config()
 
 const PORT = process.env.PORT

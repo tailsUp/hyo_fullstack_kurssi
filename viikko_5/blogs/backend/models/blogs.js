@@ -13,6 +13,7 @@ const blogsSchema = mongoose.Schema({
     user:   {type: mongoose.Schema.Types.ObjectId, ref: 'Users', required: true},
 })
 
+//Tarkistaa että blogi on uniikki arvoiltaan. Ei samaa id:tä.
 blogsSchema.plugin(uniqueValidator)
 
 /**

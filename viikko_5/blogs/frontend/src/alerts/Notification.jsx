@@ -1,3 +1,7 @@
+/**
+ * Funktio luo notifikaatio (alert) boxin. Parametri success määrittää sen näytetäänkö
+ * error vai success boksi.
+ */
 const notification = ({ message, success }) => {
   if (message === null || message === '')
   {
