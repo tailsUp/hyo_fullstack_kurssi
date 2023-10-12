@@ -15,7 +15,13 @@ const loginRouter = require('./controllers/login')
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
 
-logger.info('connecting to', config.MONGODB_URI)
+logger.info('connecting to: ', config.MONGODB_URI)
+logger.info('port in use at ENV is: ', config.PORT)
+
+logger.info('port in use at PROCESS is: ', process.env.PORT)
+logger.info('address in use at PROCESS for db is: ', process.env.MONGODB_URI)
+
+logger.info('node_env is: ', process.env.NODE_ENV)
 
 if (process.env.NODE_ENV === 'test') 
 {
