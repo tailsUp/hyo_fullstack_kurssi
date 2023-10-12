@@ -1,6 +1,7 @@
 import axios from 'axios'
 import newBLog from '../components/NewBlog'
-const baseUrl = 'http://localhost:3003/api/blogs'
+//const baseUrl = 'http://localhost:3003/api/blogs'
+const baseUrl = 'http://localhost:3001/api/blogs'
 
 let token
 
