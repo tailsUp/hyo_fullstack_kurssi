@@ -1,6 +1,6 @@
 *** Viikko 5
 
-Backend pyörii osoitteessa http://localhost:3003/
+Backend pyörii osoitteessa http://localhost:3001/
 Frontend pyörii Vitellä ensisijaisesti osoitteessa http://localhost:5173/
 
 *** Tehtävät
