@@ -7,7 +7,7 @@ const cors = require('cors')
 const config = require('./utils/config')
 const middleware = require('./utils/middleware')
 const logger = require('./utils/logger')
-app.use(express.static('dist'))
+
 //Controller:
 const blogsRouter = require('./controllers/blogs')
 const usersRouter = require('./controllers/users')
@@ -54,5 +54,6 @@ app.use(middleware.tokenExtractor)
 app.use(middleware.requestLogger)
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
+app.use(express.static('dist'))
 
 module.exports = app
