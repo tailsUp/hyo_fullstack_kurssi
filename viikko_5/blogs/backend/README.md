@@ -1,9 +1,10 @@
-*** Viikko 5
+*** Viikko 5 ***
 
 Backend pyörii osoitteessa http://localhost:3001/
 Frontend pyörii Vitellä ensisijaisesti osoitteessa http://localhost:5173/
 
-*** Tehtävät
+Renderissä täytyy asettaa ympäristömuuttujiin portti ja mongodb_uri kuntoon jos haluaa että toimii oikein. Varmista myös dist importti.
 
-5.1     - TEHTY (Kirjautuminen - OK)
-5.2     - TEHTY (Testattu Reactilla)
+*** Tehtävät ***
+
+Tehdyt tehtävät on merkitty vastaavan viikon frontendin README tiedostoon.
