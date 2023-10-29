@@ -2,11 +2,13 @@ const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const loginRouter = require('express').Router()
 const User = require('../models/users')
+const logger = require('./utils/logger')
 
 /**
  * Funktio hyväksyy käyttäjän sisään kirjautumisen jos username on uniikki.
  */
 loginRouter.post('/', async (request, response) => {
+    logger.info(`BACKEND LOGIN ROUTER SISÄLLÄ`)
     const { username, password } = request.body
 
     const user = await User.findOne({ username })
