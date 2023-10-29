@@ -5,6 +5,6 @@ const logger = require('./utils/logger')
 /**
  * Funktio kirjaa portin jossa ohjelma pyörii.
  */
-app.listen(3003, () => {
+app.listen(config.PORT, () => {
   logger.info(`Server running on port ${config.PORT}`)
 })
