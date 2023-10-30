@@ -8,7 +8,7 @@ const logger = require('../utils/logger')
  * Funktio hyväksyy käyttäjän sisään kirjautumisen jos username on uniikki.
  */
 loginRouter.post('/', async (request, response) => {
-    
+    logger.info('LOGIN.JS SISÄLLÄ')
     const { username, password } = request.body
 
     const user = await User.findOne({ username })
