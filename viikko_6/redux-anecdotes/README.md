@@ -13,3 +13,9 @@ Tämän viikon tehtävät jakautuvat useampaan projektiin.
 6.6     - OK (Projekti II)\
 6.7     - OK (Projekti II)\
 6.8     - OK (Projekti II)\
+
+6.9     - OK (PROJEKTI II)
+6.10    - EI
+6.11    - EI
+6.12    - EI
+6.13    - EI

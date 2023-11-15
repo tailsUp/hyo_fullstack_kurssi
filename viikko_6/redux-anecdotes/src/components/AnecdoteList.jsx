@@ -24,8 +24,11 @@ const SingleAnecdote = ({anecdote, vote}) => {
 }
 
 const AnecdoteList = () => {
+    
+    //const anecdotes = useSelector(state => state.sort((a, b) => b.votes - a.votes))
+    const anecdotes = useSelector(state => state.anecdotes.sort((a, b) => b.votes - a.votes))
+    const _filterText = useSelector(state => state.filter.toLowerCase())
 
-    const anecdotes = useSelector(state => state.sort((a, b) => b.votes - a.votes))
     const dispatch = useDispatch()
 
     const vote = (anecdote) => {
@@ -33,15 +36,33 @@ const AnecdoteList = () => {
         dispatch(voteAnecdote(anecdote))
     }
 
-    return (
-        <div>
-            {anecdotes.map(anecdote =>
-                <div key={anecdote.id}>
-                    <SingleAnecdote anecdote={anecdote} vote={vote}/>
-                </div>
-            )}
-        </div>
-    )
+    if(_filterText !== '') 
+    {
+        //const _filtered = anecdotes.map(anecdote => anecdote.content.includes(_filterText) ? anecdote : undefined)
+        const _filtered = anecdotes.filter(anecdote => anecdote.content.toLowerCase().includes(_filterText));
+        console.log(_filtered)
+        return (
+            <div>
+                {_filtered.map(anecdote =>
+                    <div key={anecdote.id}>
+                        <SingleAnecdote anecdote={anecdote} vote={vote}/>
+                    </div>
+                )}
+            </div>
+        )
+    }
+    else 
+    {
+        return (
+            <div>
+                {anecdotes.map(anecdote =>
+                    <div key={anecdote.id}>
+                        <SingleAnecdote anecdote={anecdote} vote={vote}/>
+                    </div>
+                )}
+            </div>
+        )
+    }
 }
 
 export default AnecdoteList
