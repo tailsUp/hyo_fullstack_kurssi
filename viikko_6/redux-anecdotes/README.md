@@ -2,7 +2,9 @@
 
 ### TEHTÄVÄT ***
 
-Tämän viikon tehtävät jakautuvat useampaan projektiin.
+Tämän viikon tehtävät jakautuvat useampaan projektiin. Projekti + numero on lähinnä minua varten jotta tiedän missä menen.
+Gitissä ensimmäiset tehtävät löytävät viikon 6 alla olevasta palautetut kansiosta. Ns. pääkansiossa on viimeisen tehtäväprojekti (eli
+tehtävään 6.23).
 
 6.1     - OK (Projekti I)\
 6.2     - OK (Projekti I)\
@@ -15,7 +17,7 @@ Tämän viikon tehtävät jakautuvat useampaan projektiin.
 6.8     - OK (Projekti II)\
 
 6.9     - OK (PROJEKTI II)
-6.10    - EI
+6.10    - OK (PROJEKTI III)
 6.11    - EI
 6.12    - EI
 6.13    - EI

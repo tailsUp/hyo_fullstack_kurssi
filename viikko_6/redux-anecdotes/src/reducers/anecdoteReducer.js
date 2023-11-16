@@ -1,3 +1,5 @@
+import { createSlice } from "@reduxjs/toolkit"
+
 const anecdotesAtStart = [
     'If it hurts, do it more often',
     'Adding manpower to a late software project makes it later!',
@@ -7,18 +9,6 @@ const anecdotesAtStart = [
     'Debugging is twice as hard as writing the code in the first place. Therefore, if you write the code as cleverly as possible, you are, by definition, not smart enough to debug it.'
 ]
 
-/**
- * Funktio luo sattumanvaraisen ID:n välillä 0 - 1000 ja palauttaa sen.
- * @returns Integer.
- */
-const getId = () => (100000 * Math.random()).toFixed(0)
-
-/**
- * Funktio palauttaa yksittäisen olion (anekdootin) ja luo sille parametrit (content, id ja votes).
- * 
- * @param {String} _content - Olion saama string merkkijono parametriin content. 
- * @returns object
- */
 const asAnecdote = (_content) => {
     return {
         content: _content,
@@ -27,69 +17,40 @@ const asAnecdote = (_content) => {
     }
 }
 
-const initialState = anecdotesAtStart.map(asAnecdote)
-
 /**
- * Funktio ottaa vastaan tilan (state) ja päivittää sitä mikäli saatu toiminta (action) vastaa switch-case rakenteen
- * vaihtoehtoja.
- * 
- * @param {State} state 
- * @param {Action} action 
- * @returns state
+ * Funktio luo sattumanvaraisen ID:n välillä 0 - 1000 ja palauttaa sen.
+ * @returns Integer.
  */
-const reducer = (state = initialState, action) => {
-    console.log('state now: ', state)
-    console.log('action', action)
-    switch (action.type) {
-        case 'VOTE':
-            return state.map(a => a.id !== action.payload.anecdote.id ? a : addVotes(action.payload.anecdote))
-        case 'NEW':
-            return state.concat(asAnecdote(action.payload.content))
-    }
-    return state
-}
+const getId = () => (100000 * Math.random()).toFixed(0)
 
-/**
- * Funktio ottaa vastaan olion ja muuttaa sen votes arvoa yhdellä suuremmaksi. Palauttaa lopulta päivitetyn olion.
- * @param {Object} anecdote 
- * @returns object
- */
-const addVotes = (anecdote) => {
-    console.log('addVotes in: ', anecdote)
-    const temp = {
-        ...anecdote,
-        votes: anecdote.votes + 1
-    }
-    console.log('addVotes out: ', temp)
-    return temp
-}
-
-/**
- * Tämä on redux action funktio ja sitä käytetään uuden anekdootin luomisessa.
- * 
- * @param {String} content - merkkijono joka sijoitetaan olion content parametriin. 
- * @returns object
- */
-export const createAnecdote = (content) => {
-    return {
-        type: 'NEW',
-        payload: {
-            content
+const anecdoteSlice = createSlice(
+    {
+        name: '_slicerAnecdote',
+        initialState: anecdotesAtStart.map(asAnecdote),
+        reducers:
+        {
+            createAnecdote(state, action) {
+                const newAnecdote = asAnecdote(action.payload)
+                state.push(newAnecdote)
+            },
+            addVotes(state, action) {
+                console.log('STATE ', JSON.parse(JSON.stringify(state)))
+                const temp = {
+                    ...action.payload,
+                    votes: action.payload.votes + 1
+                }
+                return state.map(a => a.id !== temp.id ? a : temp)
+            },
+            appendAnecdote(state, action) {
+                state.push(action.payload)
+            },
+            setAnecdotes(state, action) {
+                return action.payload
+            }
         }
     }
-}
+)
 
-/**
- * Tämä on redux action funktio ja sitä käytetään anekdootin äänestämisessä.
- * 
- * @param {Object} anecdote - anekdootti-olio. 
- * @returns object
- */
-export const voteAnecdote = (anecdote) => {
-    return {
-        type: 'VOTE',
-        payload: { anecdote }
-    }
-}
 
-export default reducer
+export const { createAnecdote, addVotes, appendAnecdote, setAnecdotes } = anecdoteSlice.actions
+export default anecdoteSlice.reducer
