@@ -2,14 +2,18 @@ import ReactDOM                         from 'react-dom/client'
 import { Provider }                     from 'react-redux'
 import App                              from './App'
 import { configureStore }               from '@reduxjs/toolkit'
-import Reducer                          from './reducers/anecdoteReducer'
-import Filter                           from './reducers/filterReducer'
+import AnecdoteReducer                  from './reducers/anecdoteReducer'
+import FilterReducer                    from './reducers/filterReducer'
+import NotificationReducer              from './reducers/notificationReducer'
+import Timer                            from './reducers/timerReducer'
 
 const store = configureStore(
   {
     reducer: {
-      anecdotes: Reducer,
-      filter: Filter
+      anecdotes: AnecdoteReducer,
+      filter: FilterReducer,
+      notification: NotificationReducer,
+      timer: Timer,
     }
   }  
 )

@@ -1,5 +1,7 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { addVotes } from '../reducers/anecdoteReducer'
+import { useDispatch, useSelector }     from 'react-redux'
+import { addVotes }                     from '../reducers/anecdoteReducer'
+import { notificationText }             from '../reducers/notificationReducer'
+import { timerID }                     from '../reducers/timerReducer'
 
 const AnecdoteButton = ( {anecdote, vote} ) => {
     return (
@@ -34,20 +36,12 @@ const AnecdoteList = () => {
     const vote = (anecdote) => {
         console.log('vote', anecdote)
         dispatch(addVotes(anecdote))
+        dispatch(notificationText(`Anecdote ${anecdote.content} has been upvoted from ${anecdote.votes} to ${anecdote.votes + 1}`))
+        const a = setTimeout(() => {
+            dispatch(notificationText([]))
+        }, 5000)
+        dispatch(timerID(a))
     }
-
-    /*const _filtered = sortAnecdotes.filter(anecdote => anecdote.content.toLowerCase().includes(_filterText));
-    console.log('Filtteröity tulos: ', _filtered)
-    return (
-        <div>
-            {_filtered.map(anecdote =>
-                <div key={anecdote.id}>
-                    <SingleAnecdote anecdote={anecdote} vote={vote}/>
-                </div>
-            )}
-        </div>
-    )*/
-
 
     if(_filterText !== '') 
     {
@@ -67,7 +61,6 @@ const AnecdoteList = () => {
     }
     else 
     {
-        console.log('TÄÄLLÄ 1111')
         return (
             <div>
                 {sortAnecdotes.map(anecdote =>

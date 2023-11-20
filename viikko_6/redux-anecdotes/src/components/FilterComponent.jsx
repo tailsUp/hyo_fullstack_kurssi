@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
-import { filterText, filterEmpty } from '../reducers/filterReducer'
-import { useDispatch } from 'react-redux'
+import { filterText, filterEmpty }  from '../reducers/filterReducer'
+import { useDispatch }              from 'react-redux'
 
 const FilterComponent = (props) => {
   const dispatch = useDispatch()

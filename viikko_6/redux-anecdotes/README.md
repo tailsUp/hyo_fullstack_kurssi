@@ -18,6 +18,6 @@ tehtävään 6.23).
 
 6.9     - OK (PROJEKTI II)
 6.10    - OK (PROJEKTI III)
-6.11    - EI
-6.12    - EI
+6.11    - OK (PROJEKTI III)
+6.12    - OK (PROJEKTI III)
 6.13    - EI
