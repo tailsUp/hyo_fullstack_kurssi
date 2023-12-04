@@ -1,9 +1,7 @@
 import { useDispatch, useSelector }     from 'react-redux'
+import { addVotes }                     from '../reducers/anecdoteReducer'
 import { notificationText }             from '../reducers/notificationReducer'
-import { addVotesThunk }                from '../reducers/anecdoteReducer'
-//import { timerID }                      from '../reducers/timerReducer'
-//import { notificationText }             from '../reducers/notificationReducer'
-//import { addVotes }                     from '../reducers/anecdoteReducer'
+import { timerID }                     from '../reducers/timerReducer'
 
 const AnecdoteButton = ( {anecdote, vote} ) => {
     return (
@@ -37,15 +35,12 @@ const AnecdoteList = () => {
 
     const vote = (anecdote) => {
         console.log('vote', anecdote)
-        //dispatch(addVotes(anecdote))
-        dispatch(addVotesThunk(anecdote))
-        dispatch(notificationText(`you voted '${anecdote.content}'`, 10)) //THUNK
-
-        //dispatch(notificationText(`Anecdote ${anecdote.content} has been upvoted from ${anecdote.votes} to ${anecdote.votes + 1}`))
-        /*const a = setTimeout(() => {
+        dispatch(addVotes(anecdote))
+        dispatch(notificationText(`Anecdote ${anecdote.content} has been upvoted from ${anecdote.votes} to ${anecdote.votes + 1}`))
+        const a = setTimeout(() => {
             dispatch(notificationText([]))
         }, 5000)
-        dispatch(timerID(a))*/
+        dispatch(timerID(a))
     }
 
     if(_filterText !== '') 

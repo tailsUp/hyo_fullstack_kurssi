@@ -1,5 +1,9 @@
 ### Viikko 6 ***
 
+Vite pyörii:    npm run dev
+
+Server pyörii:  npm run server
+
 ### TEHTÄVÄT ***
 
 Tämän viikon tehtävät jakautuvat useampaan projektiin. Projekti + numero on lähinnä minua varten jotta tiedän missä menen.
@@ -20,4 +24,17 @@ tehtävään 6.23).
 6.10    - OK (PROJEKTI III)
 6.11    - OK (PROJEKTI III)
 6.12    - OK (PROJEKTI III)
-6.13    - EI
+6.13    - OK (PROJEKTI III)
+
+6.14    - OK (PROJEKTI III)
+6.15    - OK (PROJEKTI III)
+
+6.16    - OK (PROJEKTI III)
+6.17    - OK (PROJEKTI III)
+6.18    - OK (PROJEKTI III)
+6.19    - OK (PROJEKTI III)
+
+6.20    - 
+6.21    - 
+6.22    - 
+6.23    - 

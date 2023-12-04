@@ -1,9 +1,8 @@
-import { useDispatch }          from 'react-redux'
-import { createAnecdoteThunk }  from '../reducers/anecdoteReducer'
-import { notificationText }     from '../reducers/notificationReducer'
-//import { timerID }              from '../reducers/timerReducer'
-//import anecdoteService        from '../services/anecdotes'
-//import { createAnecdote }     from '../reducers/anecdoteReducer'
+import { useDispatch }      from 'react-redux'
+import { createAnecdote }   from '../reducers/anecdoteReducer'
+import { notificationText } from '../reducers/notificationReducer'
+import { timerID }          from '../reducers/timerReducer'
+//import anecdoteService      from '../services/anecdotes'
 
 const AnecdoteForm = () => {
 
@@ -13,14 +12,15 @@ const AnecdoteForm = () => {
         event.preventDefault()
         const content = event.target.inputAnecdote.value
         emptyInputs(event)
-        //dispatch(createAnecdote(content))
-        dispatch(createAnecdoteThunk(content))
-        dispatch(notificationText(`New anecdote has been added: ${content}`, 10)) //THUNK
-        /*dispatch(notificationText(`New anecdote has been added: ${content}`))
+        //const newAnecdote = await anecdoteService.createNew(content)
+            //dispatch(createAnecdote(content))
+        //dispatch(createAnecdote(newAnecdote))
+        dispatch(createAnecdote(content))
+        dispatch(notificationText(`New anecdote has been added: ${content}`))
         const a = setTimeout(() => {
             dispatch(notificationText([]))
         }, 5000)
-        dispatch(timerID(a))*/
+        dispatch(timerID(a))
     }
 
     const emptyInputs = (event) => {
