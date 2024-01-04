@@ -12,7 +12,7 @@ Frontend pyörii Vitellä ensisijaisesti osoitteessa http://localhost:5173/
 
 **_ Tehtävät _**
 
-Tämän hetkinen tilanne. Ohjemlma toimii kaikkiaan oikein aina tehtävään 7.14 saakka.
+Tämän hetkinen tilanne. Ohjemlma toimii kaikkiaan oikein aina tehtävään 7.17 saakka.
 
 7.9     - PRETTIER - OK
 
@@ -22,8 +22,8 @@ Tämän hetkinen tilanne. Ohjemlma toimii kaikkiaan oikein aina tehtävään 7.1
 7.13    - Redux login               - OK
 
 7.14    - Käyttäjien näkymä             - OK
-7.15    - Yksittäisen käyttäjän näkymä  - EI
-7.16    - Blogi näkymät                 - EI
+7.15    - Yksittäisen käyttäjän näkymä  - OK
+7.16    - Blogi näkymät                 - OK
 7.17    - Navigaattori                  - EI
 7.18    - Kommentit 1                   - EI
 7.19    - Kommentit 2                   - EI
