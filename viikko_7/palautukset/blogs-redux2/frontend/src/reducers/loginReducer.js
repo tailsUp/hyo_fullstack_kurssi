@@ -15,7 +15,7 @@ const loginSlice = createSlice({
                     username: action.payload.username,
                     token: action.payload.token,
                 }
-                console.log('LOGIN state: ', JSON.parse(JSON.stringify(state)))
+                //console.log('LOGIN state: ', JSON.parse(JSON.stringify(state)))
                 return state
             } catch (error) {
                 //Error lisäyksessä
@@ -27,7 +27,7 @@ const loginSlice = createSlice({
         },
         logOUT(state, action) {
             state = initialState
-            console.log('LOGOUT state: ', JSON.parse(JSON.stringify(state)))
+            //console.log('LOGOUT state: ', JSON.parse(JSON.stringify(state)))
             return state
         },
     },

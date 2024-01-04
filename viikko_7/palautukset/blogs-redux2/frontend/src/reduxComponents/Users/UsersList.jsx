@@ -1,13 +1,16 @@
-import { useEffect, useReducer } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-
-import userService from '../../services/userService'
-import { appendUsers, setUsers, getUsers } from '../../reducers/userReducer'
-import showReducer from '../../reducers/showReducer'
+import { useEffect, useReducer }    from 'react'
+import { useDispatch }              from 'react-redux'
+//Service:
+import userService                  from '../../services/userService'
+//Reducer:
+import { setUsers }                 from '../../reducers/userReducer'
+import showReducer                  from '../../reducers/showReducer'
 
 const UsersList = (props) => {
     const dispatch = useDispatch()
-    const userList = useSelector((state) => state.userReducer)
+    const userList = props.initialUsers
+    //const userList = initialUsers.sort((a, b) => b.username - a.username)
+    //const userList = useSelector((state) => state.userReducer)
     const [show, setShow] = useReducer(showReducer, 'none')
 
     useEffect(() => {
@@ -16,11 +19,14 @@ const UsersList = (props) => {
 
     const view = (setShow, show, id) => {
         console.log('TOGGLE BLOCK VIEW')
-        if (show === 'none') {
+        if (show === 'none')
+        {
             console.log('PIILOTA KÄYTTÄJÄN TIEDOT!')
             setShow(true)
             document.getElementById(id).innerHTML = 'hide'
-        } else {
+        } 
+        else
+        {
             console.log('NÄYTÄ KÄYTTÄJÄN TIEDOT!')
             setShow(false)
             document.getElementById(id).innerHTML = 'view'

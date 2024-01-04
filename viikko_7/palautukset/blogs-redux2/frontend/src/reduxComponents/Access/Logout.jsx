@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux'
-
+//Reducer:
 import { logOUT } from '../../reducers/loginReducer'
 
 const Logout = () => {
-    const dispatch = useDispatch()
-    const user = useSelector((state) => state.loginReducer.username)
+    const dispatch  = useDispatch()
+    const user      = useSelector((state) => state.loginReducer.username)
 
     /**
      * Funktio loggaa käyttäjän ulos tyhjentämällä localStoragen ja suorittamalla

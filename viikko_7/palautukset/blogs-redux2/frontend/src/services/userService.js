@@ -18,10 +18,13 @@ const getAll = async () => {
  * @param {Object} newBlog  - Uusi USER jolla korvataan vanha blogi.
  */
 const update = async (ID, user) => {
-    try {
+    try 
+    {
         const request = await axios.put(`${baseUrl}/${ID}`, user)
         return request.status
-    } catch (error) {
+    }
+    catch (error)
+    {
         console.log('Error in updating and old blog. ', error)
         return 'error'
     }

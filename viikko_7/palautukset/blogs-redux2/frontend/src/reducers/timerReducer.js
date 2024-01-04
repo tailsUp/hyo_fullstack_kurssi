@@ -5,19 +5,12 @@ const timerSlice = createSlice({
     initialState: '',
     reducers: {
         timerID(state, action) {
-            console.log(
-                'STATE SISÄÄN TULLESSA',
-                JSON.parse(JSON.stringify(state))
-            )
-            console.log('ACTION ', JSON.parse(JSON.stringify(action)))
+            //console.log('STATE SISÄÄN TULLESSA', JSON.parse(JSON.stringify(state)))
             if (state !== null && state !== undefined && state !== '') {
                 clearTimeout(state)
             }
             state = action.payload
-            console.log(
-                'STATE ULOS LÄHTIESSÄ',
-                JSON.parse(JSON.stringify(state))
-            )
+            //console.log('STATE ULOS LÄHTIESSÄ', JSON.parse(JSON.stringify(state)))
             return action.payload
         },
     },

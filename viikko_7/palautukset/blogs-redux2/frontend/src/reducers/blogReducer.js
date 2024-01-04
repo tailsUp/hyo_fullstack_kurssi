@@ -27,32 +27,9 @@ const blogSlice = createSlice({
     initialState,
     reducers: {
         createBlog(state, action) {
-            console.log('action: ', action.payload)
-            try {
-                /*const _new = asBlog(
-                    action.payload.title,
-                    action.payload.author,
-                    action.payload.url,
-                    parseInt(action.payload.likes)
-                )*/
-                const _new = asBlog2(
-                    action.payload.title,
-                    action.payload.author,
-                    action.payload.url,
-                    parseInt(action.payload.likes),
-                    action.payload.username
-                )
-                //dispatch(setUsers(users)))
-                blogService.create(_new, action.payload.token).then((test) => console.log('TEST: ', test))
-                console.log('TEST: ', test)
-                state.push(_new)
-            } catch (error) {
-                //Error lisäyksessä
-                console.log('Error: ', error)
-            }
+            return state.push(asBlog2(action.payload))
         },
         addLikes(state, action) {
-            console.log('STATE ', JSON.parse(JSON.stringify(state)))
             const temp = {
                 ...action.payload,
                 likes: parseInt(action.payload.likes) + 1,
@@ -67,11 +44,10 @@ const blogSlice = createSlice({
             }
         },
         appendBlog(state, action) {
-            state.push(action.payload)
+            //console.log('APPEND_BLOG STATE', JSON.parse(JSON.stringify(state)))
+            state.push(action.payload)            
         },
         setBlogs(state, action) {
-            //console.log('SETBLOGS state: ', JSON.parse(JSON.stringify(state)))
-            //console.log('setBlogs: ', action.payload)
             return action.payload
         },
         getBlogs(state, action) {
@@ -85,12 +61,21 @@ const blogSlice = createSlice({
     },
 })
 
-export const {
-    createBlog,
-    addLikes,
-    appendBlog,
-    setBlogs,
-    deleteBlog,
-    getBlogs,
-} = blogSlice.actions
+export const { createBlog, addLikes, appendBlog, setBlogs, deleteBlog, getBlogs, } = blogSlice.actions
+
+/**
+ * 
+ * Redux-thunk funktiota käytetään uuden olion luomiseen. Funktio palauttaa funktiokutsun.
+ * 
+ * @param {Object} _blog    - Sisältää uuden blogin tiedot. 
+ * @returns funktio kutsu.
+ */
+export const createNewBlog = _blog => {
+    return async dispatch => {
+        const x = asBlog2(_blog.title, _blog.author, _blog.url, _blog.likes, _blog.username)
+        dispatch(await blogService.create(x, _blog.token).then((_b) => appendBlog(_b)))
+        //dispatch(blogService.create(x, _blog.token).then((_b) => appendBlog(_b)))
+    }
+}
+
 export default blogSlice.reducer

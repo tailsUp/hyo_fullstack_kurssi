@@ -1,60 +1,50 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { useEffect, useUpdateEffect } from 'react'
+import { useEffect }                from 'react'
 //Reducers:
-import { addLikes, deleteBlog, setBlogs } from '../../reducers/blogReducer'
-import { notificationText } from '../../reducers/notificationReducer'
-import { timerID } from '../../reducers/timerReducer'
+import { addLikes, deleteBlog }     from '../../reducers/blogReducer'
+import { notificationText }         from '../../reducers/notificationReducer'
+import { timerID }                  from '../../reducers/timerReducer'
+import { setUsers }                 from '../../reducers/userReducer'
 //Components:
-import Blog from './Blog'
-import blogService from '../../services/blogService'
-import userService from '../../services/userService'
-
-import { appendUsers, setUsers, getUsers, updateUserBlogs } from '../../reducers/userReducer'
+import Blog                         from './Blog'
+//Services:
+import userService                  from '../../services/userService'
 
 const BlogList = (props) => {
-    const dispatch = useDispatch()
-    const initialBlogs = [...useSelector((state) => state.blogReducer)]
-    const sortedBlogs = initialBlogs.sort((a, b) => b.likes - a.likes)
-    const user = useSelector((state) => state.loginReducer)
-    const users = useSelector(state => state.userReducer)
-
-
-    const userList = useSelector((state) => state.userReducer)
+    const dispatch      = useDispatch()
+    const initialBlogs  = props.initialBlogs
+    const users         = props.initialUsers
+    const sortedBlogs   = initialBlogs.sort((a, b) => b.likes - a.likes)
+    const user          = useSelector((state) => state.loginReducer)
 
     useEffect(() => {
         userService.getAll().then((users) => dispatch(setUsers(users)))
-        //userService.getAll().then((users) => dispatch(setUsers(users)))
     }, [dispatch])
 
-    
-    useEffect(() => {
-        blogService.getAll().then((blogs) => dispatch(setBlogs(blogs)))
-    }, [dispatch])
-
+    /**
+     * 
+     * Funktio muuttaa blogin äänimäärää isommaksi yhdellä.
+     * 
+     * @param {Object} _blog 
+     */
     const vote = (_blog) => {
-        console.log('vote', _blog)
+        console.log('VOTE BLOG: ', _blog)
         dispatch(addLikes(_blog))
-        dispatch(
-            notificationText(
-                `Blog ${_blog.title} has been upvoted from ${_blog.likes} to ${
-                    _blog.likes + 1
-                }`
-            )
-        )
-        const a = setTimeout(() => {
-            dispatch(notificationText([]))
-        }, 5000)
+        dispatch(notificationText(`Blog ${_blog.title} has been upvoted from ${_blog.likes} to ${_blog.likes + 1}`))
+        const a = setTimeout(() => {dispatch(notificationText([]))}, 5000)
         dispatch(timerID(a))
     }
 
+    /**
+     * 
+     * Funktio poistaa blogin.
+     * 
+     * @param {Object} _blog 
+     */
     const del = (_blog) => {
-        console.log('POISTA!!!')
-        console.log('BLOG: ', _blog)
         dispatch(deleteBlog({ ID: _blog.id, token: user.token }))
         dispatch(notificationText(`Blog ${_blog.title} has been deleted.`))
-        const a = setTimeout(() => {
-            dispatch(notificationText([]))
-        }, 5000)
+        const a = setTimeout(() => {dispatch(notificationText([]))}, 5000)
         dispatch(timerID(a))
         deleteFromUserArray(_blog)
     }
@@ -74,7 +64,6 @@ const BlogList = (props) => {
 
         if(blogID)
         {
-            console.log('users: ', users)
             const _users = users.map((_u) => {
                 if(_u.username === user.username)
                 {
@@ -92,18 +81,27 @@ const BlogList = (props) => {
                 }
                 return _u
             })
-            console.log('PÄIVITETTY users: ', users)
             dispatch(setUsers(_users))
-            dispatch(updateUserBlogs(newuser))
         }
     }
 
+    /**
+     * 
+     * Funktio muuttaa blogin näkyvyyttä.
+     * 
+     * @param {Setter} setShow  = Asettaa muuttujan arvon.
+     * @param {Value} show      = Muuttujan arvo.
+     * @param {String} id       = Elementin yksilöllinen tunnus. 
+     */
     const view = (setShow, show, id) => {
-        console.log('TOGGLE BLOCK VIEW')
-        if (show === 'none') {
+        console.log('TOGGLE BLOG VIEW')
+        if (show === 'none')
+        {
             setShow(true)
             document.getElementById(id).innerHTML = 'hide'
-        } else {
+        }
+        else
+        {
             setShow(false)
             document.getElementById(id).innerHTML = 'view'
         }

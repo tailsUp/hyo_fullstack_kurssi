@@ -1,6 +1,8 @@
-import { useReducer } from 'react'
-import showReducer from '../../reducers/showReducer'
-import ViewButton from '../Buttons/ViewBlogButton'
+import { useReducer }   from 'react'
+//Reducer:
+import showReducer      from '../../reducers/showReducer'
+//Component:
+import ViewButton       from '../Buttons/ViewBlogButton'
 
 const infoStyle = {
     border: 'solid',
@@ -14,14 +16,7 @@ const User = ({ blog, view, vote, del }) => {
         <div>
             <div>blog: {blog.title}</div>
             <div>
-                <ViewButton
-                    blog={blog}
-                    view={view}
-                    setShow={setShow}
-                    show={show}
-                    vote={vote}
-                    del={del}
-                />
+                <ViewButton blog={blog} view={view} setShow={setShow} show={show} vote={vote} del={del} />
             </div>
         </div>
     )

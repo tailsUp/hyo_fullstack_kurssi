@@ -21,12 +21,6 @@ const setToken = (newToken) => {
 const create = async (newBLog, _token) => {
     try {
         setToken(_token)
-        const config2 = {
-            headers: { Authorization: _token },
-        }
-        /*const config = {
-      headers: { token: _token },
-    }*/
         const config = {
             headers: { token: token },
         }
@@ -80,12 +74,15 @@ const getBlogWithID = async (ID) => {
  * Funktio poistaa tietokannasta ID:tä vastaavan blogin jos token on ok.
  */
 const deleteBlog = async (ID, token) => {
-    try {
+    try
+    {
         axios.defaults.headers.common['token'] = 'Bearer ' + token
         const status = await axios.delete(`${baseUrl}/${ID}`)
         axios.defaults.headers.common['token'] = ''
         return status.status
-    } catch (error) {
+    }
+    catch (error)
+    {
         axios.defaults.headers.common['token'] = ''
         console.log('Error in deleting a blog. ', error)
         return undefined

@@ -27,23 +27,11 @@ const BlogInformation = ({ blog, show, vote, del }) => {
                 <div>likes: {blog.likes}</div>
                 <div>
                     <div>
-                        <button
-                            id="btnVote"
-                            style={voteStyle}
-                            onClick={() => vote(blog)}
-                        >
-                            like
-                        </button>
+                        <button id="btnVote" style={voteStyle} onClick={() => vote(blog)} >like</button>
                     </div>
                     <br />
                     <div>
-                        <button
-                            id="btnDelete"
-                            style={delStyle}
-                            onClick={() => del(blog)}
-                        >
-                            delete
-                        </button>
+                        <button id="btnDelete" style={delStyle} onClick={() => del(blog)} >delete</button>
                     </div>
                     <br />
                 </div>

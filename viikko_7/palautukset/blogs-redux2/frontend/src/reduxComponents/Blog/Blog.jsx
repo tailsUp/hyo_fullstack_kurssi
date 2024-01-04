@@ -1,5 +1,7 @@
 import { useReducer } from 'react'
+//Reducer:
 import showReducer from '../../reducers/showReducer'
+//Component:
 import BlogInformation from './BlogInformation'
 
 const infoStyle = {
@@ -13,25 +15,12 @@ const Blog = ({ blog, view, vote, del }) => {
     return (
         <div style={infoStyle}>
             <div>blog: {blog.title}</div>
-            <BlogInformation
-                blog={blog}
-                setShow={setShow}
-                show={show}
-                vote={vote}
-                del={del}
-            />
+            <BlogInformation blog={blog} setShow={setShow} show={show} vote={vote} del={del} />
             <div>
-                <button
-                    id={`buttonView${blog.id}`}
-                    onClick={() => view(setShow, show, `buttonView${blog.id}`)}
-                >
-                    view
-                </button>
+                <button id={`buttonView${blog.id}`} onClick={() => view(setShow, show, `buttonView${blog.id}`)}>view</button>
             </div>
         </div>
     )
 }
-
-//  <BlogInformation blog={blog} setShow={setShow} show={show} vote={vote} del={del}/>
 
 export default Blog

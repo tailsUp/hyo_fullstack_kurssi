@@ -12,8 +12,7 @@ Frontend pyörii Vitellä ensisijaisesti osoitteessa http://localhost:5173/
 
 **_ Tehtävät _**
 
-Tehtävät tehty tällä hetkellä 7.14 asti. Yksi asia on kesken ennen kuin voi siirtyä seuraaviin tehtäviin. Käyttäjien blogien määrään päivittäminen
-dynaamisesti ku niitä luodaan. Päivittyy OK kun poistetaan.
+Tämän hetkinen tilanne. Ohjemlma toimii kaikkiaan oikein aina tehtävään 7.14 saakka.
 
 7.9     - PRETTIER - OK
 
