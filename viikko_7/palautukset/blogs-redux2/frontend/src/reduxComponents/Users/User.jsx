@@ -1,25 +1,40 @@
-import { useReducer }   from 'react'
-//Reducer:
-import showReducer      from '../../reducers/showReducer'
-//Component:
-import ViewButton       from '../Buttons/ViewBlogButton'
+const User = ({ _blogs, _user} ) => {
 
-const infoStyle = {
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5,
-}
-
-const User = ({ blog, view, vote, del }) => {
-    const [show, setShow] = useReducer(showReducer, 'none')
-    return (
-        <div>
-            <div>blog: {blog.title}</div>
+    if(_blogs.length < 1 || _blogs === undefined || _user === undefined)
+    {
+        return (
             <div>
-                <ViewButton blog={blog} view={view} setShow={setShow} show={show} vote={vote} del={del} />
+                <p>Loading sources. Please reload main page if this message doesnt change in 30sec.</p>
             </div>
-        </div>
-    )
+        )
+    }
+
+    if(_blogs.length > 0)
+    {
+        return (
+            <div>
+                <h2>{_user.username}</h2>
+                <b>added blogs</b>
+                <ul>
+                {_blogs.map((_b) => (
+                    <li key={_b.id}>
+                        {_b.title}
+                    </li>
+                ))}
+                </ul>
+            </div>
+        )
+    }
+    else 
+    {
+        return (
+            <div>
+                <h2>{_user.username}</h2>
+                <b>THIS USER HASNT CREATED ANY BLOGS!</b>
+            </div>
+        )
+    }
+
 }
 
 export default User

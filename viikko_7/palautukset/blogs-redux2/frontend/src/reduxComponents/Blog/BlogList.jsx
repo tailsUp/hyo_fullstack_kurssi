@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux'
 import { useEffect }                from 'react'
+import { Link }                     from 'react-router-dom'
 //Reducers:
 import { addLikes, deleteBlog }     from '../../reducers/blogReducer'
 import { notificationText }         from '../../reducers/notificationReducer'
@@ -17,9 +18,9 @@ const BlogList = (props) => {
     const sortedBlogs   = initialBlogs.sort((a, b) => b.likes - a.likes)
     const user          = useSelector((state) => state.loginReducer)
 
-    useEffect(() => {
+    /*useEffect(() => {
         userService.getAll().then((users) => dispatch(setUsers(users)))
-    }, [dispatch])
+    }, [users])*/
 
     /**
      * 
@@ -119,6 +120,16 @@ const BlogList = (props) => {
     } else {
         return (
             <div>
+            <h3>All blogs</h3>
+            {sortedBlogs.map((blog) => (
+                <div key={blog.id}>
+                    <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+                </div>
+            ))}
+        </div> 
+        )
+        /*return (
+            <div>
                 <h3>All blogs</h3>
                 {sortedBlogs.map((blog) => (
                     <div key={blog.id}>
@@ -126,7 +137,7 @@ const BlogList = (props) => {
                     </div>
                 ))}
             </div>
-        )
+        )*/
     }
 }
 
