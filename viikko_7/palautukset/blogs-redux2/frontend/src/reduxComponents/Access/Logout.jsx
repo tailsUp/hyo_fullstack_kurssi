@@ -17,6 +17,22 @@ const Logout = () => {
     }
 
     return (
+        <label>
+            <label>Logged in as {user}    </label>
+            <button id="btnLogout" onClick={() => logoutBlogs()}>logout</button>
+        </label>
+
+    )
+}
+
+export default Logout
+
+
+/*
+
+
+
+    return (
         <div>
             <div>
                 <label>{user} logged in</label>
@@ -30,6 +46,5 @@ const Logout = () => {
             <br />
         </div>
     )
-}
 
-export default Logout
+*/

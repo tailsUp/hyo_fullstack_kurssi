@@ -11,6 +11,7 @@ import TimerReducer         from './reducers/timerReducer'
 import ShowReducer          from './reducers/showReducer'
 import LoginReducer         from './reducers/loginReducer'
 import UserReducer          from './reducers/userReducer'
+import CommentReducer       from './reducers/commentReducer'
 
 const store = configureStore({
     reducer: {
@@ -20,6 +21,7 @@ const store = configureStore({
         showReducer:            ShowReducer,
         loginReducer:           LoginReducer,
         userReducer:            UserReducer,
+        commentReducer:         CommentReducer,
     },
 })
 

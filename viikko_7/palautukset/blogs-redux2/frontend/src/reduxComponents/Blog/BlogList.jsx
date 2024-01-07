@@ -10,6 +10,7 @@ import { setUsers }                 from '../../reducers/userReducer'
 import Blog                         from './Blog'
 //Services:
 import userService                  from '../../services/userService'
+import Table                        from 'react-bootstrap/Table'
 
 const BlogList = (props) => {
     const dispatch      = useDispatch()
@@ -121,23 +122,37 @@ const BlogList = (props) => {
         return (
             <div>
             <h3>All blogs</h3>
-            {sortedBlogs.map((blog) => (
-                <div key={blog.id}>
-                    <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
-                </div>
-            ))}
+
+            <Table striped>
+                <tbody>
+                    {sortedBlogs.map((blog) => (
+                        <tr key={blog.id}>
+                            <td>
+                                <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
         </div> 
         )
-        /*return (
-            <div>
-                <h3>All blogs</h3>
-                {sortedBlogs.map((blog) => (
-                    <div key={blog.id}>
-                        <Blog blog={blog} view={view} vote={vote} del={del} />
-                    </div>
-                ))}
-            </div>
-        )*/
+/*
+
+    <div key={blog.id}>
+        <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+    </div>
+
+    return (
+        <div>
+            <h3>All blogs</h3>
+            {sortedBlogs.map((blog) => (
+                <div key={blog.id}>
+                    <Blog blog={blog} view={view} vote={vote} del={del} />
+                </div>
+            ))}
+        </div>
+    )
+*/
     }
 }
 

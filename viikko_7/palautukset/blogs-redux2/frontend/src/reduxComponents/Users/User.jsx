@@ -1,6 +1,8 @@
+import ListGroup from 'react-bootstrap/ListGroup'
+
 const User = ({ _blogs, _user} ) => {
 
-    if(_blogs.length < 1 || _blogs === undefined || _user === undefined)
+    if(_blogs === undefined || _blogs === undefined || _user === undefined)
     {
         return (
             <div>
@@ -15,13 +17,12 @@ const User = ({ _blogs, _user} ) => {
             <div>
                 <h2>{_user.username}</h2>
                 <b>added blogs</b>
-                <ul>
-                {_blogs.map((_b) => (
-                    <li key={_b.id}>
-                        {_b.title}
-                    </li>
-                ))}
-                </ul>
+                <ListGroup>
+                    {_blogs.map((_b) => (
+                        <ListGroup.Item key={_b.id}>{_b.title}</ListGroup.Item>
+                    ))}
+                </ListGroup>
+
             </div>
         )
     }
@@ -30,7 +31,7 @@ const User = ({ _blogs, _user} ) => {
         return (
             <div>
                 <h2>{_user.username}</h2>
-                <b>THIS USER HASNT CREATED ANY BLOGS!</b>
+                <p>This user does not have any blogs to their name.</p>
             </div>
         )
     }

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import newBLog from '../reduxComponents/Blog/NewBlog'
 //import newBLog from '../components/NewBlog'
 //const baseUrl = 'http://localhost:3001/api/blogs'
 const baseUrl = '/api/blogs'

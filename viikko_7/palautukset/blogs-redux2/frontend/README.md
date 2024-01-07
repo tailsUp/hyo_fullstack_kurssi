@@ -10,6 +10,11 @@ Frontend pyörii Vitellä ensisijaisesti osoitteessa http://localhost:5173/
 3. node --eval "fs.writeFileSync('.prettierignore','{}\n')"
 4. npx prettier . --write --> npm run format
 
+**_ Credentials _**
+
+root / sekret
+username 1 / username 1
+
 **_ Tehtävät _**
 
 Tämän hetkinen tilanne. Ohjemlma toimii kaikkiaan oikein aina tehtävään 7.17 saakka.
@@ -25,7 +30,7 @@ Tämän hetkinen tilanne. Ohjemlma toimii kaikkiaan oikein aina tehtävään 7.1
 7.15    - Yksittäisen käyttäjän näkymä  - OK
 7.16    - Blogi näkymät                 - OK
 7.17    - Navigaattori                  - EI
-7.18    - Kommentit 1                   - EI
-7.19    - Kommentit 2                   - EI
+7.18    - Kommentit 1                   - OK
+7.19    - Kommentit 2                   - OK
 7.20    - CSS 1                         - EI
 7.21    - CSS 2                         - EI

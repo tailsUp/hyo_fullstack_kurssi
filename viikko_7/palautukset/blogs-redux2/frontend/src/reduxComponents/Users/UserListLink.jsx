@@ -1,22 +1,15 @@
-import { useDispatch }                   from 'react-redux'
-import { BrowserRouter as Router, Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Table    from 'react-bootstrap/Table';
 
-const UsersList = (props) => {
-    const dispatch = useDispatch()
-    const userList = props.initialUsers
-
+const UsersList = ({ initialUsers }) => {
     return (
-        <div>
+        <div className="container">
             <h3>Users</h3>
             <div id='userTableDiv'>
+                <p>Blogs created</p>
                 <Table striped>
                     <tbody>
-                        <tr>
-                            <th>Blogs created</th>
-                            <th></th>
-                        </tr>
-                        {userList.map((user) => (
+                        {initialUsers.map((user) => (
                             <tr key={user.id}>
                                 <td>
                                     <Link to={`/users/${user.id}`}>{user.username}</Link>
