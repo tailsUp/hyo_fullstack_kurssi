@@ -12,10 +12,15 @@ blogsRouter.get('/', async (request, response) => {
     try
     {
         console.log('GET ALL BLOG POSTS')
-        const blogs = await Blogs.find({}).populate('user', {
+        let blogs = await Blogs.find({}).populate('user', {
             username: 1,
             name: 1,
         })
+        //TÄMÄ ON TESTI!
+        /*blogs = await Comments.find({}).populate('comments', {
+            comment: 1,
+            blogID: 1,
+        })*/
         response.json(blogs)
     }
     catch (error)
@@ -38,20 +43,6 @@ blogsRouter.get('/:id', async (request, response) => {
         response.status(404).json(blogs)
     }
 })
-
-/*const getUser = async ( username ) => {
-    try
-    {
-        const _user = await User.find((user) => user.username === username)
-        console.log('user: ', _user)
-        return _user
-    }
-    catch(error)
-    {
-        console.log('ERROR: ', error)
-        return ''
-    }
-}*/
 
 /**
  * Funktio lisää olion tietokantaan.

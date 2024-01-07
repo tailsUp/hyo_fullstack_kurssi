@@ -83,8 +83,7 @@ const userExtractor = async (request, response, next) => {
         if (userID === undefined) {
             const userName = request.body.username
             //user = await Users.findByName(userName)
-            console.log('TÄÄLLÄ 1')
-            console.log('ASDASASD: ', request.body)
+            console.log('userExtractor: ', request.body)
             user = await Users.find({ username: userName })
             console.log('user: ', user)
         } else {
@@ -98,8 +97,7 @@ const userExtractor = async (request, response, next) => {
         }
         return request
     } catch (error) {
-        console.log('TÄÄLLÄ 4')
-        console.log('Virhe käyttäjän haussa: ', error)
+        console.log('userExtractor - Virhe käyttäjän haussa: ', error)
         next()
     }
 }

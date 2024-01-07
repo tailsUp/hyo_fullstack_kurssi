@@ -1,17 +1,19 @@
 //Muut:
-const express = require('express')
+const express   = require('express')
 require('express-async-errors')
-const app = express()
-const cors = require('cors')
+const app       = express()
+const cors      = require('cors')
 //Utils:
-const config = require('./utils/config')
-const middleware = require('./utils/middleware')
-const logger = require('./utils/logger')
+const config        = require('./utils/config')
+const middleware    = require('./utils/middleware')
+const logger        = require('./utils/logger')
 
 //Controller:
-const blogsRouter = require('./controllers/blogs')
-const usersRouter = require('./controllers/users')
-const loginRouter = require('./controllers/login')
+const blogsRouter       = require('./controllers/blogs')
+const usersRouter       = require('./controllers/users')
+const loginRouter       = require('./controllers/login')
+const commentsRoutter   = require('./controllers/comments')
+
 //Mongoose:
 const mongoose = require('mongoose')
 mongoose.set('strictQuery', false)
@@ -51,6 +53,7 @@ app.use(express.json())
 app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
+app.use('/api/comments', commentsRoutter)
 
 app.use(middleware.userExtractor)
 app.use(middleware.tokenExtractor)
