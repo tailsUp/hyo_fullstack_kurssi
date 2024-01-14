@@ -19,7 +19,6 @@ npm install uuid\
 8.6     - OK\
 8.7     - OK\
 
-
 *** Apollon vastaukset per tehtävä ***
 
 8.1\
