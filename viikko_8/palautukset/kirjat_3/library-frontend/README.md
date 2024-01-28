@@ -14,6 +14,6 @@ Tämä on Viikon 8 toinen kotitehtävä projekti (8.8 - 8.12)\
 \
 8.13    - OK (Kirjan tallentaminen mahdollista kun käyttää olemassa olevan kirjailijan nimeä).\
 8.14    - OK (Kaikki kutsut toimii).\
-8.15    - OK (tehty tarkistukset title, author ja published).\
-8.16    - EI.\
+8.15    - OK (Tehty tarkistukset title, author ja published).\
+8.16    - OK (Toteutettu seuraavassa projektissa loppuun).\
 \
