@@ -27,6 +27,16 @@ let authors  = []
 let books   = []
 
 const typeDefs = `
+  type User {
+    username: String!
+    favoriteGenre: String!
+    id: ID!
+  }
+
+  type Token {
+    value: String!
+  }
+
   type Genre {
     genre: String!
   }
@@ -65,12 +75,13 @@ const typeDefs = `
   }
 
   type Query {
+    me:             User
     bookCount:      Int!
     authorCount:    Int!
     allAuthors:     [Author!]!
     allAuthors2:    [Author2!]!
     allBooks:       [Book!]!
-    allBooks2(author: String, genre: String):            [Book!]!
+    allBooks2(author: String, genre: String):  [Book!]!
     getAuthID(authorName: String!):            String!
   }
 
@@ -83,27 +94,24 @@ const typeDefs = `
       authorName: String!
     ): Book
     
-    getAuthors:   [Author!]!
+    getAuthors: [Author!]!
 
     editAuthor(
         name: String!
         setBornTo: Int!
       ): Author
 
+    createUser(
+      username: String!
+      favoriteGenre: String!
+    ): User
+
+    login(
+      username: String!
+      password: String!
+    ): Token
   }
 `
-
-/*
-
-    addBook2(
-      title:      String!
-      published:  Int!
-      genres:     [String]!
-      authorID:   String!
-      authorName: String!
-    ): Book3
-
-*/
 
 const validateNewBook = (props) => {
   console.log('VALIDATE: ', props)
@@ -210,6 +218,22 @@ const resolvers = {
         const updated = { ..._author, born: args.setBornTo }
         authors = authors.map(a => a.name === args.name ? updated : a)
         return updated
+      },
+      login: async (root, args) => {
+        const user = await User.findOne({ username: args.username })
+    
+        if ( !user || args.password !== 'secret' ) {
+          throw new GraphQLError('wrong credentials', {
+            extensions: { code: 'BAD_USER_INPUT' }
+          })        
+        }
+    
+        const userForToken = {
+          username: user.username,
+          id: user._id,
+        }
+    
+        return { value: jwt.sign(userForToken, process.env.JWT_SECRET) }
       },
   }
 }
