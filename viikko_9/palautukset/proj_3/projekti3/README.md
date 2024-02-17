@@ -1,15 +1,11 @@
 *** Viikko 9 ***
 \
-Tässä projektissa viikon 9 projekti kolme. Eli tehtävät 9.14 - 9.19\
+Tässä projektissa viikon 9 projekti kolme. Eli tehtävät 9.14 - 9.15\
 \
 *** Tehtävät ***
 \
 9.14 - OK.\
-9.15 \
-9.16\
-9.17\
-9.18\
-9.19\
+9.15 - OK.\
 \
 *** Asennukset ***
 \
