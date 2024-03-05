@@ -30,6 +30,7 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
   const submitNewPatient = async (values: PatientFormValues) => {
     try {
       const patient = await patientService.create(values);
+      console.log('Uusi potilas lisätty: ', patient);
       setPatients(patients.concat(patient));
       setModalOpen(false);
     } catch (e: unknown) {
@@ -48,6 +49,7 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
     }
   };
 
+  //<Link to={`/patients/${patient.id}`}>{patient.name}</Link>
   return (
     <div className="App">
       <Box>
@@ -68,7 +70,6 @@ const PatientListPage = ({ patients, setPatients } : Props ) => {
           {Object.values(patients).map((patient: Patient) => (
             <TableRow key={patient.id}>
               <TableCell>
-                <Link to={`/patients/${patient.id}`}>{patient.name}</Link>
                 <Link to={`/patients/${patient.id}`} state={{patient: patient}}>{patient.name}</Link>
               </TableCell>
               <TableCell>{patient.gender}</TableCell>
