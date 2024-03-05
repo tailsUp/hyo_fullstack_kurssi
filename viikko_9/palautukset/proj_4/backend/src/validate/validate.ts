@@ -1,42 +1,31 @@
 import { NewPatientEntry } from "../types/types";
 
+/*const undefinedOrEmpty = (check: string): boolean => {
+    if(check === undefined || check === "") 
+    {
+        return false;
+    }
+    return true;
+};*/
+
 /**
  * Funktio tarkistaa onka annettu muuttuja string. Ei tarkista mahdollisten string olioiden osalta. Ei tarvetta.
  * @param _string unknown.
  * @returns TYPE PREDICATE.
  */
 const validateString = (_string: unknown): _string is string => {
-    console.log('validate string: ', _string);
-    if(typeof _string === 'string' || _string instanceof String) {
+    if(typeof _string === 'string' || _string instanceof String)
+    {
         return true;
     }
     return false;
 };
-
-/**
- * Funktio muuttaa suomalaisen päivämäärän muotoon vvvv-kk-pp ja palauttaa sen. Ei tarkista onko numeroita, eikä tarkista onko kuukausi muotoa 1 vai 01 jne.
- * @param _date string.
- * @returns string.
- */
-/*const convertDate = (_date: string): string => {
-    const _split = _date.split('.');
-    if(_split.length === 3) {
-        if(_split[0].length === 4) {
-            return _split[0] + '.' + _split[1] + '.' + _split[2];
-        } else if(_split[2].length === 4) {
-            return _split[2] + '.' + _split[1] + '.' + _split[0];
-        }
-        return '';
-    }
-    return '';
-};*/
 
 const isDate = (date: string): boolean => {
     return Boolean(Date.parse(date));
 };
   
 const parseDate = (date: string): string => {
-    console.log('validate date: ', date);
     if (!date || !isDate(date)) {
         throw new Error('Incorrect or missing date: ' + date);
     }
@@ -51,7 +40,6 @@ enum GenderEnum { female  = 'female', male    = 'male', other   = 'other' }
  * @returns boolean.
  */
 const validateGender = (_gender: string): _gender is GenderEnum => {
-    console.log('validate gender; ', _gender);
     return Object.values(GenderEnum).map(_g => _g.toString()).includes(_gender);
 };
 
@@ -62,11 +50,14 @@ const validateGender = (_gender: string): _gender is GenderEnum => {
  * @returns object | boolean.
  */
 export const validatePatient = (_patient: NewPatientEntry): NewPatientEntry => {
-    if(validateString(_patient.name) && validateString(_patient.ssn) && validateString(_patient.gender) && validateString(_patient.occupation)) {
-        if(validateGender(_patient.gender)) {
+    if(validateString(_patient.name) && validateString(_patient.ssn) && validateString(_patient.gender) && validateString(_patient.occupation))
+    {
+        if(validateGender(_patient.gender))
+        {
             const _modifiedDate = parseDate(_patient.dateOfBirth);
             //_modifiedDate = convertDate(_modifiedDate);
-            if(_modifiedDate !== '') {
+            if(_modifiedDate !== '')
+            {
                 console.log('Kaikki tarkistukset läpi!');
                 _patient.dateOfBirth = _modifiedDate;
                 return _patient;
@@ -81,7 +72,51 @@ export const validatePatient = (_patient: NewPatientEntry): NewPatientEntry => {
     throw new Error('Incorrect or missing data');
 };
 
-export default {
-    validatePatient,
-    GenderEnum
-  };
+/*const stringIsNotEmpty = (test: string): boolean => {
+    if(typeof test === "string" && test.length === 0)
+    {
+        return false;
+    }
+    return true;
+};
+
+const checkEntries = (listOfString: string[]): boolean => {
+    for(let i=0;i<listOfString.length;i++)
+    {
+        if(!stringIsNotEmpty(listOfString[i]))
+        {
+            return false;
+        }
+    }
+    return true;
+};*/
+
+export const checkDateForms = (listOfDates: string[]) => {
+    for(let i=0;i<listOfDates.length;i++)
+    {
+        const regex = new RegExp('d{4}-d{2}-d{2}');
+
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+        if(!regex.test(listOfDates[i]).toString())
+        {
+            return false;
+        }
+        else
+        {
+            const d = new Date(listOfDates[i]);
+            const t = d.getTime();
+            if(!t && t !== 0)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+};
+
+export const validateRating = (n: number) => {
+    if(n < 0 || n > 3) {
+        return false;
+    }
+    return true;
+};

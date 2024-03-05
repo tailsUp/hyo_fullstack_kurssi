@@ -3,13 +3,12 @@ import { DiagnoseEntry } from '../types/diagnose';
 
 const diagnoses: DiagnoseEntry[] = data as DiagnoseEntry[];
 
+
 const getEntries = (): DiagnoseEntry[] => {
   return diagnoses;
 };
 
-const addDiagnosis = (
-  code: string, name: string, latin: string
-): DiagnoseEntry => {
+const addDiagnosis = (code: string, name: string, latin: string): DiagnoseEntry => {
   const _newEntry = {
     code,
     name,
@@ -17,10 +16,11 @@ const addDiagnosis = (
   };
 
 diagnoses.push(_newEntry);
-return _newEntry;
+  return _newEntry;
 };
 
 const findByCode = (code: string): DiagnoseEntry | undefined => {
+  console.log('KUTSU TULLUT DIAGNOSE - FIND BY CODE');
   const entry = diagnoses.find(d => d.code === code);
   return entry;
 };

@@ -14,9 +14,12 @@ router.post('/', (_req, res) => {
 });
 
 router.get('/:code', (req, res) => {
+  console.log('Kutsu tullut router diagnoosiin');
+  console.log(req.params.code);
   const _diagnose = service.findByCode(String(req.params.code));
 
   if (_diagnose) {
+    console.log(_diagnose);
     res.send(_diagnose);
   } else {
     res.sendStatus(404);
