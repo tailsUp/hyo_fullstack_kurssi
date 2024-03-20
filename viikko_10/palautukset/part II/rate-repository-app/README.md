@@ -2,6 +2,9 @@
 
 PART II
 
+Testattu iphone 14 näkymällä. Tehtävissä ei velvoitettu tekemään css tyyleistä responsiivisia jokaiselle näytölle joten sisältää
+paljon kovakoodattuja arvoja.
+
 *** PROJEKTI ASENNUKSET ***
 
 1. npx create-expo-app rate-repository-app --template expo-template-blank@sdk-50
