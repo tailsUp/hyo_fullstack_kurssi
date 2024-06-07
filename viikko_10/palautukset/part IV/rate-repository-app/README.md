@@ -2,10 +2,11 @@
 
 PART II
 
-Testattu iphone 14 näkymällä. Tehtävissä ei velvoitettu tekemään css tyyleistä responsiivisia jokaiselle näytölle joten sisältää
-paljon kovakoodattuja arvoja.
+Testattu iphone 14 näkymällä.
 
 *** CREDENTIALS ***
+
+Esimerkit joilla voi kirjautua sisään:
 
 username: kalle
 password: password
@@ -68,4 +69,4 @@ Tällä hetkellä: 26.
 10.25   - OK\
 10.26   - OK\
 
-ALL REPOSIROTIES EI MENE POHJALLE ASTI!!!
+10.27   - EI
