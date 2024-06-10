@@ -180,11 +180,11 @@ const CreateForm = ({ onSubmit, guide }) => {
             )}
 
             <Pressable style={formTheme.pressableStyle} onPress={formik.handleSubmit}>
-                <Pressable  >
-                        <CustomText fontWeight={'bold'} style={formTheme.pressableTextStyle}>
-                            CREATE REVIEW
-                        </CustomText>
-                    </Pressable>
+                <View>
+                    <CustomText fontWeight={'bold'} style={formTheme.pressableTextStyle}>
+                        CREATE REVIEW
+                    </CustomText>
+                </View>
             </Pressable>
 
             <CustomText color='textSecondary'>

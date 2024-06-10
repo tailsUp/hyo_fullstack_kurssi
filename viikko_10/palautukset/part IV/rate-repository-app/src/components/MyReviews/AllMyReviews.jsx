@@ -3,8 +3,14 @@ import theme                            from '../../themes/theme'
 import MyReviewComponent                from './MyReviewComponent';
 import ItemSeparator                    from '../Views/ItemSeperator';
 import { OrderRepositoriesByRating }    from '../../util/Util';
+import ViewReviewText from '../Views/ViewReviewText';
 
 const AllMyReviews = ({ reviews, setSingle, setID }) => {
+
+    if(reviews.length === 0)
+    {
+        return (<ViewReviewText text={'You dont have any reviews!'} />);
+    }
 
     reviews = OrderRepositoriesByRating({ reviews });
 

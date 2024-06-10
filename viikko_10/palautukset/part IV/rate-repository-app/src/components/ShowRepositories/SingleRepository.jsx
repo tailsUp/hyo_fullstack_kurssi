@@ -54,10 +54,6 @@ const SingleRepository = ({ setSingle, ID }) => {
     if(data)
     {
         const name = data.repository.fullName;
-        /*const stars = data.repository.stargazersCount;
-        const forks = data.repository.forksCount;
-        const review = data.repository.reviewCount;
-        const rating = data.repository.ratingAverage;*/
         const stars     = numberFormatterBrief({number: data.repository.stargazersCount});
         const forks     = numberFormatterBrief({number: data.repository.forksCount});
         const review    = numberFormatterBrief({number: data.repository.reviewCount});

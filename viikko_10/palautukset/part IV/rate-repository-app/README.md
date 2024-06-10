@@ -11,6 +11,11 @@ Esimerkit joilla voi kirjautua sisään:
 username: kalle
 password: password
 
+MUITA:
+
+Pelimies2 / Pelimies3 / Pelimies4
+Salasana / Salasana   / Salasana
+
 *** PROJEKTI ASENNUKSET ***
 
 1. npx create-expo-app rate-repository-app --template expo-template-blank@sdk-50
@@ -56,7 +61,7 @@ Tällä hetkellä: 26.
 10.13   - OK\
 10.14   - OK\
 10.15   - OK\
-10.16   - OK\
+10.16   - OK
 
 10.17   - OK\
 10.18   - OK\
@@ -67,6 +72,9 @@ Tällä hetkellä: 26.
 10.23   - OK\
 10.24   - OK\
 10.25   - OK\
-10.26   - OK\
+10.26   - OK
 
 10.27   - EI
+
+
+KAIKKI TEHDYT OK - PALAUTETAAN!

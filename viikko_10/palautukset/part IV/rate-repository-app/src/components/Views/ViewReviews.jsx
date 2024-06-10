@@ -18,7 +18,7 @@ const ViewReviews = ({ nodes }) => {
                     data={nodes}
                     ItemSeparatorComponent={ItemSeparator}
                     renderItem={({item}) => <ReviewItem item={item}/>}
-                    contentContainerStyle={{ paddingBottom: 750 }}/>
+                    contentContainerStyle={{ paddingBottom: 750 }} />
             </View>
         </View>
     );
