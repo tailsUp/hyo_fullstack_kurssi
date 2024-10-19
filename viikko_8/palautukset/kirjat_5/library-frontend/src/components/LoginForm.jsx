@@ -16,7 +16,6 @@ const LoginForm = (props) => {
 
   useEffect(() => {
     if ( result.data ) {
-      console.log('QEQQEWQE');
       const token = result.data.login.value
       props.setToken(token)
       localStorage.setItem('esim-token', token)
@@ -29,7 +28,6 @@ const LoginForm = (props) => {
 
   const submit = async (event) => {
     event.preventDefault()
-    console.log('zxczcxzcxz');
     props.setPage('authors')
     const result = await login({ variables: { username, password } })
     console.log('RESULT: ', result)

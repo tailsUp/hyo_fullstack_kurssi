@@ -66,6 +66,7 @@ const typeDefs = `
       genres:     [String]!,
       authorID:   String!,
       authorName: String!
+      create:     Boolean,
     ): Book
     getAuthors: [Author!]!
     editAuthor( name: String!, setBornTo: Int! ): Author

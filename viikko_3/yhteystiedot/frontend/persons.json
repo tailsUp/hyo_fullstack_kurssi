@@ -1,0 +1,24 @@
+{
+  "persons": [
+    {
+      "id": 1,
+      "name": "test1",
+      "number": "123123"
+    },
+    {
+      "id": 2,
+      "name": "test2",
+      "number": "123123"
+    },
+    {
+      "id": 3,
+      "name": "test3",
+      "number": "123123"
+    },
+    {
+      "id": 4,
+      "name": "test4",
+      "number": "123123"
+    }
+  ]
+}
