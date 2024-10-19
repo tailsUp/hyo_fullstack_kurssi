@@ -2,6 +2,7 @@
 /* eslint-disable react/prop-types */
 import { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, Link, useParams, useNavigate} from 'react-router-dom'
+import  { useField, useReset } from './hooks'
 
 let timeoutID = ''
 
@@ -59,7 +60,6 @@ const AnecdoteList = ({ anecdotes }) => (
       {anecdotes.map(anecdote => 
         <li key={anecdote.id}>
           <Link to={`/anecdotes/${anecdote.id}`}>{anecdote.content}</Link>
-          {anecdote.content}
         </li>)}
     </ul>
   </div>
@@ -101,7 +101,7 @@ const About = () => (
     <em>An anecdote is a brief, revealing account of an individual person or an incident.
       Occasionally humorous, anecdotes differ from jokes because their primary purpose is not simply to provoke laughter but to reveal a truth more general than the brief tale itself,
       such as to characterize a person by delineating a specific quirk or trait, to communicate an abstract idea about a person, place, or thing through the concrete details of a short narrative.
-      An anecdote is "a story with a point."</em>
+      An anecdote is a story with a point.</em>
 
     <p>Software engineering is full of excellent anecdotes, at this app you can find the best and add more.</p>
   </div>
@@ -130,9 +130,15 @@ const Footer = () => (
  */
 const CreateNew = (props) => {
   const navigate = useNavigate()
-  const [content, setContent] = useState('')
+  /*const [content, setContent] = useState('')
   const [author, setAuthor] = useState('')
-  const [info, setInfo] = useState('')
+  const [info, setInfo] = useState('')*/
+  const content = useField('text')
+  const author = useField('text')
+  const info = useField('text')
+
+  const reset2 = useReset('')
+  const reset = useField('')
 
   const handleSubmit = (e) => {
     e.preventDefault()
@@ -146,6 +152,39 @@ const CreateNew = (props) => {
     navigate('/')
   }
 
+  const clear = (event) => {
+    console.log('Reset all fields')
+    props.reset({content,author,info})
+  }
+
+  //<form onSubmit={handleSubmit}>
+
+  return (
+    <div>
+      <h2>create a new anecdote</h2>
+      <form onSubmit={handleSubmit}>
+      <div>
+        <div>
+          content: <input {...content} /><br/>  
+        </div>
+        <div>
+          author: <input {...author} /><br />
+        </div>
+        <div>
+          info: <input {...info} />
+        </div>       
+      </div>
+        <button>create</button>
+        <br/>
+        <input type='button' onClick={clear} value='reset'/>
+        <br/>
+      </form>
+    </div>
+  )
+
+    //<button type='reset' onClick={reset}>create</button>
+
+  /*
   return (
     <div>
       <h2>create a new anecdote</h2>
@@ -166,6 +205,7 @@ const CreateNew = (props) => {
       </form>
     </div>
   )
+  */
 
 }
 
@@ -198,12 +238,21 @@ const App = () => {
 
   const addNew = (anecdote) => {
     anecdote.id = Math.round(Math.random() * 10000)
-    setAnecdotes(anecdotes.concat(anecdote))
-    setShow(anecdote.content)
+    //setAnecdotes(anecdotes.concat(anecdote))
+    setAnecdotes(anecdotes.concat({content: anecdote.content.value, author: anecdote.author.value, info: anecdote.info.value, id: anecdote.id}))
+    setShow(anecdote.content.value)
     clearTimeout(timeoutID)
     timeoutID = setTimeout(() => {
       setShow(undefined)
     }, 5000)
+  }
+
+  const clear = ( values ) => {
+    console.log('Values coming in: ', values)
+    values.content.onClick()
+    values.author.onClick()
+    values.info.onClick()
+    console.log('Values going out: ', values)
   }
 
   const anecdoteById = (id) =>
@@ -230,7 +279,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<AnecdoteList anecdotes={anecdotes} />} />
           <Route path="/anecdotes/:id" element={<Anecdote anecdotes={anecdotes} />} />
-          <Route path="/create" element={<CreateNew addNew={addNew} />} />
+          <Route path="/create" element={<CreateNew addNew={addNew} reset={clear}/>} />
           <Route path="/about" element={<About />} />
         </Routes>
       </Router>

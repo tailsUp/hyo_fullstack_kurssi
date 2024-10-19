@@ -4,10 +4,12 @@ const { PubSub }        = require('graphql-subscriptions')
 const { v1: uuid }      = require('uuid')
 const pubsub            = new PubSub()
 const Book              = require('./models/book')
+const Author3           = require('./models/author3')
 const Author            = require('./models/author')
 const User              = require('./models/user')
 
 let authors = []
+let authors3 = []
 let books = []
 
 const validateNewBook = (props) => {
@@ -46,6 +48,10 @@ const resolvers = {
         authors = await Author.find({})
         return authors
       },
+      allAuthors2: async () => {
+        authors = await Author.find({})
+        return authors
+      },
       allGenres: async () => {
         let _genres = []
         let _initial = books.map((_b) => _b.genres.map((_g) => _g))
@@ -60,10 +66,6 @@ const resolvers = {
         })
         console.log(_genres)
         return _genres
-      },    
-      allAuthors2: async () => {
-        authors = await Author.find({})
-        return authors
       },
       allBooks:       async () => {
         books = await Book.find({}).populate('author', { name: 1, born: 1 })
@@ -86,14 +88,12 @@ const resolvers = {
         }
         console.log('Author: ', _au[0])
         console.log('Author ID: ', _au[0]._id)
-        //const _return = ObjectId(_au[0]._id)
-        //console.log('ID: ', _return)
-        //return _return.toString()
         return  _au[0]._id.toString()
     },
     },
     Author2:{
       bookCount: ( _author ) => {
+        console.log("ASDASD")
           let z = 0
           z = books.filter(_b => _b.author.name == _author.name)
           return z.length
