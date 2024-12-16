@@ -1,0 +1,59 @@
+USERS:
+
+USER:
+{
+    "username": "root",
+    "name": "root_user",
+    "password": "root",
+    "admin": true,
+    "disabled": false
+}
+{
+    "username": "first_username",
+    "name": "first_name",
+    "password": "root",
+    "admin": false,
+    "disabled": false
+}
+{
+    "username": "second_username",
+    "name": "second_name",
+    "password": "root",
+    "admin": false,
+    "disabled": false
+}
+
+BLOGS:
+
+{
+    "title":    "Title_through_postman_nr_1",
+    "author":   "Postman",
+    "url":      "www.unknown.com",
+    "likes":    5,
+    "userId":   1,
+    "year":     1993
+}
+{
+    "title":    "Title_through_postman_nr_2",
+    "author":   "Postman",
+    "url":      "www.unknown.com",
+    "likes":    8,
+    "userId":   1,
+    "year":     2000
+}
+{
+    "title":    "Title_through_postman_nr_3",
+    "author":   "Skoobie",
+    "url":      "www.mystries.com",
+    "likes":    6,
+    "userId":   2,
+    "year":     2013
+}
+{
+    "title":    "NEW_TITLE",
+    "author":   "Mailman",
+    "url":      "www.url.com",
+    "likes":    9,
+    "userId":   3,
+    "year":     1997
+}
