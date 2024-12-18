@@ -1,8 +1,8 @@
-# Backend week13
+# Backend viikko 13
 
-This project is for last set of excercises. It has been modified to worh with sql database. 
+Sisältää viimeisen "viikon" 13 tehtävät.
 
-*** Exercises ***
+*** Tehtävät ***
 
 13.1    - OK\
 13.2    - OK\
@@ -28,6 +28,10 @@ This project is for last set of excercises. It has been modified to worh with sq
 13.22   - OK\
 13.23   - OK\
 13.24   - OK
+
+*** Tietokanta ***
+
+Harjoitusten tietokanta toteuttiin docker ratkaisulla.
 
 *** Testaus ***
 

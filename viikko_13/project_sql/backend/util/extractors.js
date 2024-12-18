@@ -61,6 +61,13 @@ const userExtractor = async (request, response, next) => {
   }
 }
 
+/**
+ * Funktio etsii käyttäjän session tietokannasta ja palauttaa sen requestin user kentässä.
+ * @param {Request} request 
+ * @param {Response} response 
+ * @param {Next} next 
+ * @returns request
+ */
 const sessionExtractor = async (request, response, next) => {
   logger('sessionExtractor')
   try
@@ -84,7 +91,7 @@ const sessionExtractor = async (request, response, next) => {
       }  
       if (user.disabled)
       {
-        session.isValid = false
+        session.active = false
         await session.save()
         return _error.errorHandler({ name: 'UserDisabled' }, request, response, next)
       }
