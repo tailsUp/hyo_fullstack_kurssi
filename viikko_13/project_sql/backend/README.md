@@ -8,7 +8,7 @@ This project is for last set of excercises. It has been modified to worh with sq
 13.2    - OK\
 13.3    - OK\
 13.4    - OK\
-13.5    - OKv
+13.5    - OK\
 13.6    - OK\
 13.7    - OK\
 13.8    - OK\
@@ -40,5 +40,7 @@ USERS:\
 Put:    Ei onnistu vanhalla tai väärällä tokenilla. Ei onnistu jos ei ole kirjautunut sisään.\
 Logout toimii. Poistaa session.\
 
-npm install jsonwebtoken
+*** Asennukset ***
+
+npm install jsonwebtoken\
 npm install umzug
