@@ -27,18 +27,18 @@ This project is for last set of excercises. It has been modified to worh with sq
 13.21   - OK\
 13.22   - OK\
 13.23   - OK\
-13.24   - OK\
+13.24   - OK
 
 *** Testaus ***
 
-Viimeinen tehtävä testattu postmanilla:
+Viimeinen tehtävä testattu postmanilla:\
 BLOG:\
 Put:    Ei onnistu vanhalla tai väärällä tokenilla. Ei onnistu jos ei ole kirjautunut sisään.\
 Delete: Ei onnistu vanhalla tai väärällä tokenilla. Ei onnistu jos ei ole kirjautunut sisään.\
 Post:   Ei onnistu vanhalla tai väärällä tokenilla. Ei onnistu jos ei ole kirjautunut sisään.\
 USERS:\
 Put:    Ei onnistu vanhalla tai väärällä tokenilla. Ei onnistu jos ei ole kirjautunut sisään.\
-Logout toimii. Poistaa session.\
+Logout toimii. Poistaa session.
 
 *** Asennukset ***
 
