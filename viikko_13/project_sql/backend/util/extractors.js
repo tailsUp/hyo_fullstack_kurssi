@@ -1,4 +1,3 @@
-const { User } = require('../models/user')
 const jwt = require('jsonwebtoken')
 const { logger } = require('../util/simpleLogger')
 const { SECRET } = require('../util/config')
@@ -58,7 +57,7 @@ const userExtractor = async (request, response, next) => {
   }
   catch (err)
   {
-    return _error.errorHandler({ name: 'XXXXXXX' }, request, response, next)
+    return _error.errorHandler({ name: 'noSession' }, request, response, next)
   }
 }
 
