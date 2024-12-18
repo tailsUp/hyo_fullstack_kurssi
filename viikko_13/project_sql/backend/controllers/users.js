@@ -1,44 +1,34 @@
 const router = require('express').Router()
-//const { ValidationError } = require('sequelize')
-const { User } = require('../models')
-//const { Note } = require('../models')
-const { Blog } = require('../models')
-const error = require('../util/errorHandler')
+const { User, Blog } = require('../models')
+const _error = require('../util/errorHandler')
+const { Op } = require('sequelize')
+const {logger } = require('../util/simpleLogger')
+const { findByUsername } = require('../util/finders')
+const { sessionExtractor, tokenExtractor } = require('../util/extractors')
 
-const findByUsername = async (req, res, next) => {
-  console.log('----- ----- -----')
-  console.log('Etsitään käyttäjä käyttäjänimellä')
-  console.log('----- ----- -----')
-  req.user = await User.findAll({
-    where: {
-      username: req.params.username,
-    }
-  })
-  next()
-}
-
+/**
+ * Funktio hakee kaikki käyttäjät.
+ */
 router.get('/', async (req, res) => {
-  console.log('----- ----- -----')
-  console.log('Haetaan kaikki käyttäjät')
-  console.log('----- ----- -----')
+  logger('Haetaan kaikki käyttäjät')
   const users = await User.findAll({
     include: {
       model: Blog,
       attributes: 
       { 
         attributes: ['title'],
-        //exclude: ['id', 'name', 'url', 'likes', 'username', 'author', 'user', 'userId']
         exclude: ['id', 'name', 'url', 'likes', 'username', 'author', 'user', 'userId', 'year', 'createdAt', 'updatedAt']
-      }
+      },
     }
   })
   res.json(users)
 })
 
+/**
+ * Funktio luo uuden käyttäjän.
+ */
 router.post('/', async (req, res, next) => {
-  console.log('----- ----- -----')
-  console.log('Luodaan uusi käyttäjä')
-  console.log('----- ----- -----')
+  logger('Luodaan uusi käyttäjä')
   try
   {
     req.body.password = 'root'
@@ -47,23 +37,56 @@ router.post('/', async (req, res, next) => {
   }
   catch(er) 
   {
-    console.log('----- ----- -----')
-    console.log('Käyttäjän lisäyksessä tapahtui virhe!', er)
-    console.log('----- ----- -----')
-    if(error.checkEmail(er.errors)) 
+    logger('Käyttäjän lisäyksessä tapahtui virhe!')
+    if(_error.checkEmail(er.errors)) 
     {
-      console.log('ASDASDADSAD')
-      return error.errorHandler({ name: 'errorEmail' }, req, res, next)
+      return _error.errorHandler({ name: 'errorEmail' }, req, res, next)
     }
-    return error.errorHandler({ name: 'errorX' }, req, res, next)
+    return _error.errorHandler({ name: 'errorX' }, req, res, next)
   }
 })
 
+/**
+ * Funktio hakee käyttäjän id:n perusteella.
+ */
 router.get('/:id', async (req, res) => {
-  console.log('----- ----- -----')
-  console.log('Luodaan käyttäjä id:llä')
-  console.log('----- ----- -----')
-  const user = await User.findByPk(req.params.id)
+  logger('Haetaan käyttäjä id:llä')
+  let where = {}
+
+  if(req.query.read && req.query.read === 'true')
+  {
+    where = { is_read: { [Op.is]: true } }
+  }
+  else if(req.query.read && req.query.read === 'false')
+  {
+    where = { is_read: { [Op.is]: false } }
+  }
+
+  const user = await User.findByPk(req.params.id, {
+    include: [
+      {
+        model: Blog,
+        attributes: 
+        { 
+          attributes: ['title'],
+          exclude: ['id', 'name', 'url', 'likes', 'username', 'author', 'user', 'userId', 'year', 'createdAt', 'updatedAt']
+        }
+      },
+      {
+        model: Blog,
+        as: 'readings',
+        attributes: 
+        { 
+          exclude: ['id', 'name', 'username', 'user', 'userId', 'createdAt', 'updatedAt']
+        },
+        through: {
+        as: 'readingList',
+        attributes: ['isRead', 'id'],
+        where,
+        },
+      }
+    ]
+  })
   if (user) {
     res.json(user)
   } else {
@@ -71,36 +94,32 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-router.put('/:username', findByUsername, async (req, res, next) => {
-  console.log('----- ----- -----')
-  console.log('Päivitetään käyttäjätunnus')
-  console.log('----- ----- -----')
+/**
+ * Funktio päivittää käyttäjän username kentän avulla.
+ */
+router.put('/:username', tokenExtractor, sessionExtractor, findByUsername, async (req, res, next) => {
+  logger('Päivitetään käyttäjän tietoja')
   try 
   {
     if (req.user[0]) 
-      {
+    {
       req.user[0].username = req.body.username
       await req.user[0].save()
       return res.json(req.user)
       //res.json(req.blog)
     }
-    console.log('----- ----- -----')
-    console.log('Käyttäjää ei ole')
-    console.log('----- ----- -----')
-    return error.errorHandler({ name: 'errorX' }, req, res, next)
+    logger('Käyttäjää ei ole')
+    return _error.errorHandler({ name: 'errorX' }, req, res, next)
   }
   catch(er) 
   {
-    console.log('----- ----- -----')
-    console.log('Käyttäjätunnuksen päivityksessä tapahtui virhe')
-    console.log('----- ----- -----')
-    if(error.checkEmail(er.errors)) 
+    logger('Käyttäjätunnuksen päivityksessä tapahtui virhe')
+    if(_error.checkEmail(er.errors)) 
     {
-      return error.errorHandler({ name: 'errorEmail' }, req, res, next)
+      return _error.errorHandler({ name: 'errorEmail' }, req, res, next)
     }
-    return error.errorHandler({ name: 'errorX' }, req, res, next)
+    return _error.errorHandler({ name: 'errorX' }, req, res, next)
   }
-
 })
 
 module.exports = router

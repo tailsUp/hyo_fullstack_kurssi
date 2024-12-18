@@ -1,49 +1,54 @@
 const jwt = require('jsonwebtoken')
 const router = require('express').Router()
-
+const { logger } = require('../util/simpleLogger')
 const { SECRET } = require('../util/config')
-const User = require('../models/user')
+const Session = require('../models/session')
+const { findUserByUsername, findSessionByUserId } = require('../util/finders')
+const _error = require('../util/errorHandler')
 
-router.post('/', async (request, response) => {
-  console.log('----- ----- -----')
-  console.log('backend login funktio kutsuttu:')
-  console.log('----- ----- -----')
-  
+/**
+ * Funktiota käytetään käyttäjän kirjaamiseen sisään ohjelmaan.
+ */
+router.post('/', async (request, response, next) => {
+  logger('Login user (backend)')
   const body = request.body
-  const user = await User.findOne(
-  {
-    where: 
-    {
-      username: body.username
-    }
-  })
+  const _username = body.username
+  const user = await findUserByUsername(_username)
 
-  //const passwordCorrect = body.password === 'secret'
   const passwordCorrect = body.password === 'root'
 
   if (!(user && passwordCorrect))
   {
-    return response.status(401).json(
-    {
-      error: 'invalid username or password'
-    })
+    return _error.errorHandler({ name: 'errorX' }, request, response, next)
   }
 
   if (user.disabled)
   {
-    return response.status(401).json(
-      {
-        error: 'account disabled, please contact admin'
-      }
-    )
+    return _error.errorHandler({ name: 'errorX' }, request, response, next)
   }
 
-  const userForToken = {
+  const _id = user.id
+  const exists = await findSessionByUserId(_id)
+  console.log('EXISTS: ', exists)
+  if(exists) 
+  {
+    console.log('Tuhotaan vanhat sessiot.')
+    await exists.destroy()
+  }
+
+  const newSession = await Session.create(
+  {
+    userId: user.id,
+    active: true,
+  })
+
+  const userSession = {
     username: user.username,
     id: user.id,
+    sessionId: newSession.id
   }
 
-  const token = jwt.sign(userForToken, SECRET)
+  const token = jwt.sign(userSession, SECRET)
   //console.log('TOKEN: ', token)
   response.status(200).send(
   { 

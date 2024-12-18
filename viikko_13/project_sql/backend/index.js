@@ -12,7 +12,10 @@ const blogsRouter = require('./controllers/blogs')
 const usersRouter = require('./controllers/users')
 const loginRouter = require('./controllers/login')
 const authorRouter = require('./controllers/authors')
+const listRouter = require('./controllers/list')
+const logoutRouter = require('./controllers/logout')
 
+const extractors = require('./util/extractors')
 const errors = require('./util/errorHandler')
 
 app.use(express.json())
@@ -23,7 +26,11 @@ app.use('/api/blogs', blogsRouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
 app.use('/api/authors', authorRouter)
-
+app.use('/api/readinglists', listRouter)
+app.use('/api/logout', logoutRouter)
+app.use(extractors.sessionExtractor)
+app.use(extractors.tokenExtractor)
+app.use(extractors.userExtractor)
 app.use(errors.errorHandler)
 
 const start = async () => {

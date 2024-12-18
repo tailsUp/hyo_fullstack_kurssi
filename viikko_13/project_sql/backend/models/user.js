@@ -30,7 +30,7 @@ User.init({
     type: DataTypes.STRING,
     allowNull: false
   },
-  /*admin: 
+  admin: 
   {
     type: DataTypes.BOOLEAN,
     defaultValue: false
@@ -39,7 +39,7 @@ User.init({
   {
     type: DataTypes.BOOLEAN,
     defaultValue: false
-  },*/
+  },
 }, {
   sequelize,
   underscored: true,

@@ -1,28 +1,24 @@
 const router = require('express').Router()
 const { User } = require('../models')
-const { tokenExtractor } = require('../util/extractors')
-
+const { tokenExtractor, sessionExtractor } = require('../util/extractors')
+const { findUserByUsername } = require('../util/finders')
+const _error = require('../util/errorHandler')
 
 const isAdmin = async (req, res, next) => {
     const user = await User.findByPk(req.decodedToken.id)
     if (!user.admin)
     {
-        return res.status(401).json(
-        { 
-            error: 'operation not allowed' 
-        })
+        return _error.errorHandler({ name: 'errorX' }, req, res, next)
     }
     next()
 }
-  
-router.put('/:username', tokenExtractor, isAdmin, async (req, res) => {
-    const user = await User.findOne(
-    {
-        where: 
-        {
-            username: req.params.username
-        }
-    })
+
+/**
+ * Funktio päivittää käyttäjän disabled tiedon.
+ */
+router.put('/:username', tokenExtractor, sessionExtractor, isAdmin, async (req, res, next) => {
+    const _username = req.params.username
+    const user = await findUserByUsername(_username)
 
     if (user)
     {
@@ -32,6 +28,6 @@ router.put('/:username', tokenExtractor, isAdmin, async (req, res) => {
     } 
     else
     {
-        res.status(404).end()
+        return _error.errorHandler({ name: 'errorX' }, req, res, next)
     }
 })

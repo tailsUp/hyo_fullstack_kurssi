@@ -1,16 +1,17 @@
 const router = require('express').Router()
 const { Op } = require('sequelize')
-
+const { sessionExtractor, tokenExtractor } = require('../util/extractors')
 const { Blog } = require('../models')
 const { User } = require('../models')
 const _error = require('../util/errorHandler')
+const { blogFinder } = require('../util/finders')
+const {logger } = require('../util/simpleLogger')
 
-const blogFinder = async (req, res, next) => {
-  req.blog = await Blog.findByPk(req.params.id)
-  next()
-}
-
+/**
+ * Funktio hakee kaikki blogit.
+ */
 router.get('/', async (req, res) => {
+  logger('Haetaan kaikki blogit')
   let where = {}
   /*
   13.13
@@ -23,7 +24,8 @@ router.get('/', async (req, res) => {
   }*/
 
   //13.14
-  if (req.query.search) {
+  if (req.query.search)
+  {
     where = {
       [Op.or]: [
         { title: { [Op.iLike]: `%${req.query.search}%` } },
@@ -32,7 +34,8 @@ router.get('/', async (req, res) => {
     }
   }
 
-  const notes = await Blog.findAll({
+  const blogs = await Blog.findAll(
+  {
     attributes: 
     { 
       exclude: ['userId'] 
@@ -45,20 +48,25 @@ router.get('/', async (req, res) => {
     where,
     order: [ ['likes', 'DESC'] ] //13.15
   })
-
-  res.json(notes)
+  res.json(blogs)
 })
 
-
-router.post('/', async (req, res, next) => {
-  console.log('----- ----- -----')
-  console.log('Luodaan uusi blogi')
-  console.log('----- ----- -----')
-  try {
-    const blog = await Blog.create({...req.body})
-    console.log(blog.body)
+/**
+ * Funktio luo uuden blogin
+ * tokenExtractor, sessionValidator,
+ */
+router.post('/', tokenExtractor, sessionExtractor, async (req, res, next) => {
+  logger('Luodaan uusi blogi')
+  try
+  {
+    const blog = await Blog.create(
+      {
+        ...req.body
+      })
     res.json(blog)
-  } catch(e) {
+  }
+  catch(e)
+  {
     if(e.message === 'Validation error: yearError') 
     { 
       return _error.errorHandler({ name: 'errorY' }, req, res, next)
@@ -67,68 +75,62 @@ router.post('/', async (req, res, next) => {
   }
 })
 
+/**
+ * Funktio hakee yksittäisne blogin id perusteella.
+ */
 router.get('/:id', blogFinder, async (req, res) => {
-  //const Blog = await Blog.findByPk(req.params.id)
-  console.log('----- ----- -----')
-  console.log('Haetaan blogia idn perusteella')
-  console.log('----- ----- -----')
-  if (req.blog) {
+  logger('Haetaan blogia idn perusteella')
+  if (req.blog)
+  {
     res.json(req.blog)
     return res.json(req.blogs)
-  } else {
+  }
+  else
+  {
     res.status(404).end()
   }
 })
 
 /**
- * Blogin tiedoissa oleva tieto lisääjästä pitää sopia yhteen poistajan nimimerkin kanssa.
+ * Funktio poistaa blogin jos poistopyynnön tekee blogin lisääjä.
  */
-router.delete('/:id', blogFinder, async (req, res, next) => {
-  console.log('----- ----- -----')
-  console.log('Poistetaan blogi')
-  console.log('----- ----- -----')
-  //if (req.blog && req.blog.dataValues.username === req.body.username) {
+router.delete('/:id', tokenExtractor, sessionExtractor, blogFinder, async (req, res, next) => {
+  logger('Poistetaan blogi')
   try
   {
-    console.log('ID1: ', req.blog.dataValues.userId)
-    console.log('ID2: ', req.body.userId)
-    if (req.blog && req.blog.dataValues.userId === req.body.userId) {
+    if (req.blog && req.blog.dataValues.userId === req.body.userId)
+    {
       await req.blog.destroy()
-      console.log('----- ----- -----')
-      console.log('POISTETTU')
-      console.log('----- ----- -----')
+      logger('POISTETTU')
       res.status(204).end()
     }
     else 
     {
-      console.log('USERID DOESNT MATCH!')
+      logger('Blogia ei löydy tai sinulla ei ole oikeuksia poistaa sitä')
       _error.errorHandler({ name: 'errorX' }, req, res, next)
-    }
-    
+    } 
   }
   catch(err)
   {
-    console.log(err)
     _error.errorHandler({ name: 'errorX' }, req, res, next)
   }
-
-  
 })
 
-router.put('/:id', blogFinder, async (req, res, next) => {
-  console.log('----- ----- -----')
-  console.log('Päivitetään blogi')
-  console.log('----- ----- -----')
-    //const blog = await Blog.findByPk(req.params.id)
-    if (req.blog) {
-      console.log(req.blog.toJSON())
-      req.blog.likes = req.body.likes
-      await req.blog.save()
-      res.json(req.blog)
-    } else {
-      //return res.status(404).end()
-      return _error.errorHandler({ name: 'errorX' }, req, res, next)
-    }
+/**
+ * Funktio päivittää yksittäisen blogin tykkäysten määrän.
+ */
+router.put('/:id', tokenExtractor, sessionExtractor, blogFinder, async (req, res, next) => {
+  logger('Päivitetään blogi')
+  if (req.blog)
+  {
+    req.blog.likes = req.body.likes
+    await req.blog.save()
+    res.json(req.blog)
+  }
+  else
+  {
+    return _error.errorHandler({ name: 'errorX' }, req, res, next)
+  }
 })
 
 module.exports = router

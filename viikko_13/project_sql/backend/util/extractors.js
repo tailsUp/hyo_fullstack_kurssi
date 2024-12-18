@@ -1,60 +1,38 @@
-const User = require('../models/user')
+const { User } = require('../models/user')
 const jwt = require('jsonwebtoken')
-
+const { logger } = require('../util/simpleLogger')
+const { SECRET } = require('../util/config')
+const { findUserByID, findSessionByID } = require('../util/finders')
+const _error = require('../util/errorHandler')
 /**
- * Funktio etsii headereista Bearer authorization tiedon, muokkaa sen ja asettaa token kenttään.
+ * Funktio palauttaa käyttäjän tokenin
  * @param {Request} request 
  * @param {Response} response 
  * @param {Next} next 
- * @returns request
+ * @returns 
  */
-/*const tokenExtractor = (request, response, next) => {
-    try 
-    {
-      request.rawHeaders.map(function(_h)
-      {
-        if(_h.includes("Bearer")) 
-        {
-          request.token = _h.replace('Bearer ', '')
-        }
-          return _h
-        });
-      return request
-    }
-    catch (error) 
-    {
-      console.log('----- ----- -----')
-      console.log('Error in converting token from header to request. ', error)
-      console.log('----- ----- -----')
-      next()
-    }
-}*/
-
-const tokenExtractor = (req, res, next) => {
-  const authorization = req.get('authorization')
+const tokenExtractor = (request, response, next) => {
+  logger('tokenExtractor')
+  const authorization = request.get('authorization')
   if (authorization && authorization.toLowerCase().startsWith('bearer '))
   {
-      try
-      {
-          req.decodedToken = jwt.verify(authorization.substring(7), process.env.SECRET)
-      }
-      catch
-      {
-        console.log('----- ----- -----')
-        console.log('Error in converting token from header to request. TOKEN INVALID ')
-        console.log('----- ----- -----')
-        return res.status(401).json({ error: 'token invalid' })
-      }
+    try
+    {
+      request.decodedToken = jwt.verify(authorization.substring(7), SECRET)
+    }
+    catch
+    {
+      logger('Error in converting token from header to request. TOKEN INVALID ')
+      return response.status(401).json({ error: 'token invalid' })
+    }
   }
   else
   {
-      console.log('----- ----- -----')
-      console.log('Error in converting token from header to request. TOKEN MISSING ')
-      console.log('----- ----- -----')
-      return res.status(401).json(
-      {
-          error: 'token missing'
-      })
+    logger('Error in converting token from header to request. TOKEN MISSING ')
+    return response.status(401).json(
+    {
+      error: 'token missing'
+    })
   }
   next()
 }
@@ -67,24 +45,57 @@ const tokenExtractor = (req, res, next) => {
  * @returns request
  */
 const userExtractor = async (request, response, next) => {
-    try 
+  logger('userExtractor')
+  try 
+  {
+    const userID = request.body.userId || request.body.user
+    const user = await findUserByID(userID)
+    if(user) 
     {
-      const userID = request.body.userId || request.body.user
-      const user = await User.findById(userID)
-      if(user) 
-      {
-        console.log('USER: ', user)
-        request.user = user
-      }
-      return request
+      request.user = user
     }
-    catch (error)
-    {
-      console.log('----- ----- -----')
-      console.log('Virhe käyttäjän haussa: ', error)
-      console.log('----- ----- -----')
-      next()
-    }
+    next()
+  }
+  catch (err)
+  {
+    return _error.errorHandler({ name: 'XXXXXXX' }, request, response, next)
+  }
 }
 
-module.exports = { tokenExtractor, userExtractor }
+const sessionExtractor = async (request, response, next) => {
+  logger('sessionExtractor')
+  try
+  {
+    const authorization = request.get('authorization')
+    //Bearer pitää "hakea" erikseen että toimii. Pelkkä auth ei riitä.
+    if (authorization && authorization.toLowerCase().startsWith('bearer '))
+    {
+      request.decodedToken = jwt.verify(authorization.substring(7), SECRET)
+      const _id = request.decodedToken.id
+      const _sesId = request.decodedToken.sessionId
+      const user = await findUserByID(_id)
+      const session = await findSessionByID(_id, _sesId)
+  
+      if (!(session))
+      {
+        return _error.errorHandler({ name: 'TokenExpiredError' }, request, response, next)
+      }
+      if (!(session.active)) {
+        return _error.errorHandler({ name: 'SessionExpiredError' }, request, response, next)
+      }  
+      if (user.disabled)
+      {
+        session.isValid = false
+        await session.save()
+        return _error.errorHandler({ name: 'UserDisabled' }, request, response, next)
+      }
+    }
+    next()
+  }
+  catch(err)
+  {
+    return _error.errorHandler({ name: 'noSession' }, request, response, next)
+  }
+}
+
+module.exports = { tokenExtractor, userExtractor, sessionExtractor }

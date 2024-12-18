@@ -6,7 +6,7 @@ This project is for last set of excercises. It has been modified to worh with sq
 
 13.1    - OK
 13.2    - OK
-13.3    - EI
+13.3    - OK
 13.4    - OK
 13.5    - OK
 13.6    - OK
@@ -22,6 +22,23 @@ This project is for last set of excercises. It has been modified to worh with sq
 13.16   - OK
 13.17   - OK
 13.18   - OK
+13.19   - OK
+13.20   - OK
+13.21   - OK
+13.22   - OK 1/2 The user is identified as usual from the token accompanying the request.
+13.23   - OK
+13.24   - OK
+
+*** Testaus ***
+
+Viimeinen tehtävä testattu postmanilla:
+BLOG:\
+Put:    Ei onnistu vanhalla tai väärällä tokenilla. Ei onnistu jos ei ole kirjautunut sisään.\
+Delete: Ei onnistu vanhalla tai väärällä tokenilla. Ei onnistu jos ei ole kirjautunut sisään.\
+Post:   Ei onnistu vanhalla tai väärällä tokenilla. Ei onnistu jos ei ole kirjautunut sisään.\
+USERS:\
+Put:    Ei onnistu vanhalla tai väärällä tokenilla. Ei onnistu jos ei ole kirjautunut sisään.\
+Logout toimii. Poistaa session\
 
 npm install jsonwebtoken
 npm install umzug
